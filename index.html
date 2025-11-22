@@ -1,212 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>India Sewa Pro - Trusted Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
-      color: #222;
-      transition: background 0.4s ease;
-    }
-    body.dark-mode {
-      background: #121212;
-      color: #f1f1f1;
-    }
-    header {
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(8px);
-      text-align: center;
-      padding: 40px 20px;
-      border-bottom: 2px solid #ccc;
-    }
-    body.dark-mode header {
-      background: rgba(0,0,0,0.7);
-      border-bottom: 2px solid #444;
-    }
-    header h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-    header p {
-      font-size: 1.1em;
-    }
-    .welcome {
-      margin-top: 10px;
-      font-weight: bold;
-      color: #003566;
-    }
-    body.dark-mode .welcome { color: #d4af37; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>India Sewa Pro - Trusted Government Services Portal</title>
 
-    .toggle {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      background: #003566;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      z-index: 999;
-    }
-    .toggle:hover {
-      background: #002147;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    .search-box {
-      text-align: center;
-      margin: 30px auto;
-    }
-    .search-box input {
-      width: 90%;
-      max-width: 500px;
-      padding: 12px;
-      border: 2px solid #003566;
-      border-radius: 8px;
-      font-size: 1em;
-      outline: none;
-    }
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    section {
-      padding: 30px 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 2em;
-      color: #003566;
-    }
-    body.dark-mode h2 {
-      color: #d4af37;
-    }
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
+  color: #222;
+  transition: 0.4s ease;
+}
 
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-    .service-box {
-      background: rgba(255,255,255,0.75);
-      backdrop-filter: blur(6px);
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-    body.dark-mode .service-box {
-      background: rgba(0,0,0,0.5);
-      box-shadow: 0 4px 12px rgba(255,255,255,0.1);
-    }
-    .service-box:hover {
-      transform: translateY(-5px);
-    }
-    .service-box h3 {
-      margin-bottom: 15px;
-    }
-    .btn {
-      background: #003566;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
-    .btn:hover {
-      background: #001f3f;
-    }
+body.dark-mode {
+  background: #0d0d0d;
+  color: #fff;
+}
 
-    footer {
-      background: #003566;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-  </style>
+header {
+  text-align: center;
+  padding: 50px 20px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  border-bottom: 3px solid #003566;
+}
+
+header h1 { font-size: 3em; color: #003566; }
+body.dark-mode header h1 { color: #d4af37; }
+
+header img { width: 120px; margin-bottom: 10px; }
+
+.toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: #003566;
+  color: white;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+  padding: 25px;
+  max-width: 1300px;
+  margin: auto;
+}
+
+.service-box {
+  background: rgba(255,255,255,0.9);
+  padding: 22px;
+  border-radius: 14px;
+  text-align: center;
+  transition: 0.35s ease;
+  transform-style: preserve-3d;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+}
+
+.service-box:hover {
+  transform: translateY(-10px) rotateX(6deg);
+  box-shadow: 0px 18px 30px rgba(0,0,0,0.3);
+}
+
+.service-box i {
+  font-size: 40px;
+  margin-bottom: 10px;
+  color: #003566;
+}
+
+.btn {
+  background: #003566;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 12px;
+}
+
+footer {
+  background: #003566;
+  padding: 18px;
+  text-align: center;
+  color: white;
+  margin-top: 40px;
+}
+</style>
 </head>
+
 <body>
 
-  <button class="toggle" onclick="toggleMode()">🤖</button>
+<button class="toggle" onclick="document.body.classList.toggle('dark-mode')">🌙</button>
 
-  <header>
-    <h1>India Sewa Pro</h1>
-    <p>Trusted One Portal for All Bharat Services</p>
-    <div class="welcome">Welcome, Yamir Bhai</div>
-  </header>
+<header>
+  <img src="https://i.ibb.co/6WqQ3R8/ashoka.png" />
+  <h1>India Sewa Pro</h1>
+  <p>Trusted Government Services Portal</p>
+</header>
 
-  <div class="search-box">
-    <input type="text" id="search" placeholder="Search e.g. Aadhaar, PAN, Tapan...">
+<section>
+  <div class="services">
+
+    <!-- 30 SERVICES BELOW -->
+
+    <div class="service-box"><i class="fa-solid fa-id-card"></i><h3>Aadhaar Card</h3><a href="https://uidai.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-address-card"></i><h3>PAN Card</h3><a href="https://tin.tin.nsdl.com" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-square-check"></i><h3>Voter ID</h3><a href="https://nvsp.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-hospital-user"></i><h3>Ayushman Bharat</h3><a href="https://pmjay.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-cloud"></i><h3>DigiLocker</h3><a href="https://digilocker.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-bolt"></i><h3>Electricity Bill</h3><a href="https://bharatbillpay.com" class="btn">Pay</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-graduation-cap"></i><h3>Scholarship Portal</h3><a href="https://scholarships.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-certificate"></i><h3>Birth Certificate</h3><a href="https://crsorgi.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-car"></i><h3>Driving License</h3><a href="https://parivahan.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-fire"></i><h3>Gas Subsidy</h3><a href="https://my.ebharatgas.com" class="btn">Check</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-bread-slice"></i><h3>Ration Card</h3><a href="https://nfsa.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-gear"></i><h3>e-Shram Card</h3><a href="https://eshram.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-passport"></i><h3>Passport Service</h3><a href="https://passportindia.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-building-columns"></i><h3>PF / UAN</h3><a href="https://epfindia.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-file-invoice"></i><h3>Income Tax</h3><a href="https://incometax.gov.in" class="btn">File</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-money-bill"></i><h3>GST Portal</h3><a href="https://gst.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-gavel"></i><h3>eDistrict</h3><a href="#" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-heart"></i><h3>Marriage Certificate</h3><a href="#" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-wheat-awn"></i><h3>PM Kisan</h3><a href="https://pmkisan.gov.in" class="btn">Check</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-map"></i><h3>Land Records (Bhulekh)</h3><a href="#" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-droplet"></i><h3>Water Bill</h3><a href="#" class="btn">Pay</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-city"></i><h3>Municipal Tax</h3><a href="#" class="btn">Pay</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-house"></i><h3>PM Awas Yojana</h3><a href="https://pmaymis.gov.in" class="btn">Check</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-shield"></i><h3>Cyber Crime Portal</h3><a href="https://cybercrime.gov.in" class="btn">Report</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-school"></i><h3>School Admission</h3><a href="#" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-stethoscope"></i><h3>Health ID (ABHA)</h3><a href="https://healthid.ndhm.gov.in" class="btn">Create</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-list-check"></i><h3>RTI Portal</h3><a href="https://rtionline.gov.in" class="btn">File</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-wallet"></i><h3>PPF / NPS</h3><a href="#" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-bus"></i><h3>Fastag Recharge</h3><a href="https://fastag.org" class="btn">Recharge</a></div>
+
   </div>
+</section>
 
-  <section>
-    <h2>All Government Services</h2>
-    <div class="services" id="service-list">
-
-      <!-- Promoted -->
-      <div class="service-box promoted">
-        <h3>Tapan Service Portal</h3>
-        <a href="https://example.com/tapan" class="btn" target="_blank">Access Now</a>
-      </div>
-
-      <!-- 40 Services Below -->
-      <div class="service-box"><h3>Aadhaar Card</h3><a href="https://uidai.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>PAN Card</h3><a href="https://tin.tin.nsdl.com" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Voter ID</h3><a href="https://www.nvsp.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Ayushman Bharat</h3><a href="https://pmjay.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>DigiLocker</h3><a href="https://digilocker.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Electricity Bill</h3><a href="https://bharatbillpay.com" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Scholarship Portal</h3><a href="https://scholarships.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Birth Certificate</h3><a href="https://crsorgi.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Driving License</h3><a href="https://parivahan.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Gas Subsidy (DBTL)</h3><a href="https://my.ebharatgas.com" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Ration Card</h3><a href="https://nfsa.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>e-Shram Card</h3><a href="https://eshram.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Passport Services</h3><a href="https://passportindia.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>PF UAN Portal</h3><a href="https://unifiedportal-mem.epfindia.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Income Tax Filing</h3><a href="https://incometax.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>GST Portal</h3><a href="https://www.gst.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>eDistrict Portal</h3><a href="#" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Marriage Certificate</h3><a href="#" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>PM Kisan Yojana</h3><a href="https://pmkisan.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Land Record (Bhulekh)</h3><a href="#" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Water Bill Payment</h3><a href="#" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Municipal Tax</h3><a href="#" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Ayushman Bharat Card</h3><a href="https://beneficiary.nha.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <div class="service-box"><h3>Pradhan Mantri Awas Yojana</h3><a href="https://pmaymis.gov.in" class="btn" target="_blank">Access Now</a></div>
-      <!-- Add more up to 40 -->
-
-    </div>
-  </section>
-
-  <footer>
-    &copy; 2025 India Sewa Pro. Developed by Hyper Yamir.
-  </footer>
-
-  <script>
-    const searchInput = document.getElementById('search');
-    const services = document.querySelectorAll('.service-box');
-
-    searchInput.addEventListener('input', function () {
-      const value = this.value.toLowerCase();
-      services.forEach(box => {
-        box.style.display = box.innerText.toLowerCase().includes(value) ? 'block' : 'none';
-      });
-    });
-
-    function toggleMode() {
-      document.body.classList.toggle('dark-mode');
-    }
-  </script>
+<footer>
+  © 2025 India Sewa Pro • Developed by Hyper Yamir
+</footer>
 
 </body>
 </html>
