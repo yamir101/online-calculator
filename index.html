@@ -1,318 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>India Sewa Pro — Full Premium Portal (Dark mode, Voice, 3D, APIs)</title>
-
-<meta name="description" content="India Sewa Pro — All-in-one modern government services portal with voice search, dark mode, autosuggest, PIN & weather lookups, 3D cards and mobile nav." />
-<meta name="keywords" content="India Sewa, government services, Aadhaar, PAN, voice search, bhulekh, PM Sewa, PIN lookup, vehicle RC, weather" />
-
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>India Sewa Pro — All Services Portal</title>
+<meta name="description" content="India Sewa Pro - unified portal for government services. Voice search, dark mode, 3D cards, SIR & MP forms, PIN & Weather lookups."/>
+<meta name="keywords" content="Aadhaar, PAN, Passport, SIR, Bhulekh, PM Kisan, government services"/>
 <link rel="icon" href="https://i.ibb.co/6WqQ3R8/ashoka.png">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
+<!-- Font Awesome (solid icons) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
-/* ----------------- THEME & RESET ----------------- */
+/* ========== ROOT & RESET ========== */
 :root{
-  --gov-blue: #003566;
-  --gov-gold: #d4af37;
-  --bg-light: linear-gradient(180deg,#eef6ff 0%, #e6eefc 100%);
-  --bg-dark: linear-gradient(180deg,#071022 0%, #07162a 100%);
-  --glass-bg: rgba(255,255,255,0.55);
-  --glass-border: rgba(255,255,255,0.15);
-  --card-shadow: 0 12px 30px rgba(2,6,23,0.12);
-  --accent: #0077ff;
+  --gov-blue:#003566;
+  --gov-gold:#d4af37;
+  --bg-light:linear-gradient(180deg,#eef6ff,#e6eefc);
+  --bg-dark:linear-gradient(180deg,#071022,#071428);
+  --card-bg: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.18);
+  --shadow: 0 14px 40px rgba(2,6,23,0.08);
+  --accent:#0077ff;
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family: 'Roboto', sans-serif;-webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+html,body{height:100%;font-family:Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:var(--bg-light);color:#072032;transition:background .25s,color .25s}
+body.dark{background:var(--bg-dark);color:#e6eef7}
 
-/* ---------- PAGE LAYOUT ---------- */
-body{ background:var(--bg-light); color:#072032; transition: background .25s ease, color .25s ease; }
-body.dark{ background:var(--bg-dark); color:#e6eef7; }
+/* ========== PRELOADER ========== */
+#preloader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:rgba(3,37,76,0.92);z-index:99999;color:#fff}
+.pre-logo{width:100px;height:100px;border-radius:14px;background:linear-gradient(135deg,var(--gov-blue),#072a4b);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.pre-track{width:320px;height:12px;background:rgba(255,255,255,0.12);border-radius:12px;overflow:hidden;margin-bottom:12px}
+.pre-bar{height:100%;width:0;background:linear-gradient(90deg,var(--gov-gold),#ffd86b);border-radius:12px;transition:width 700ms cubic-bezier(.2,.9,.3,1);box-shadow:0 6px 18px rgba(0,0,0,0.45)}
+.pre-text{opacity:0.95;font-weight:600}
 
-/* animated header gradient */
-.header-animated{
-  padding:20px 28px; border-radius:12px; margin-bottom:18px;
-  background: linear-gradient(-45deg,#003566,#005ea8,#0066d1,#d4af37);
-  background-size: 400% 400%;
-  animation: gradientShift 10s ease infinite;
-  color: white;
-  display:flex;align-items:center;justify-content:space-between;gap:14px;
-}
-@keyframes gradientShift{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-
-/* ---------- PRELOADER (SUPER) ---------- */
-#preloader{
-  position:fixed; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column;
-  background: rgba(3, 37, 76, 0.92); z-index:99999; color:white;
-}
-.pre-logo{ width:110px; height:110px; border-radius:18px; display:flex;align-items:center;justify-content:center;
-  background: linear-gradient(135deg,#003566,#072a4b); box-shadow:0 18px 40px rgba(0,0,0,0.55); margin-bottom:18px;
-}
-.pre-track{ width:320px; height:12px; background: rgba(255,255,255,0.12); border-radius:12px; overflow:hidden; }
-.pre-bar{ height:100%; width:0%; background:linear-gradient(90deg,#d4af37,#ffd86b); border-radius:12px; transition:width 800ms cubic-bezier(.2,.9,.3,1); box-shadow:0 6px 18px rgba(0,0,0,0.45); margin-bottom:10px; }
-.pre-text{ opacity:0.95; font-weight:600; }
-
-/* ---------- SIDEBAR ---------- */
+/* ========== LAYOUT ========== */
+.container{display:flex;min-height:100vh}
 .sidebar{
-  width:260px; position:fixed; left:18px; top:18px; bottom:18px; padding:18px; border-radius:12px;
-  background: rgba(255,255,255,0.92); box-shadow: 0 12px 40px rgba(2,6,23,0.06);
-  border:1px solid rgba(0,53,102,0.04); backdrop-filter: blur(6px); overflow:auto;
+  width:260px;padding:18px;border-right:1px solid rgba(0,0,0,0.05);
+  background:rgba(255,255,255,0.95);
+  position:sticky;top:18px;height:calc(100vh - 36px);margin:18px;border-radius:12px;backdrop-filter:blur(6px)
 }
-body.dark .sidebar{ background: rgba(10,15,25,0.65); border:1px solid rgba(255,255,255,0.04); }
-.brand{ display:flex; gap:12px; align-items:center; margin-bottom:8px; }
-.brand img{ width:56px; border-radius:10px; }
-.brand h2{ font-size:1.1rem; color:var(--gov-blue); margin:0; }
-body.dark .brand h2{ color:#ffd86b; }
-.sidebar .nav{ margin-top:12px; display:flex; flex-direction:column; gap:8px; }
-.nav a{ text-decoration:none; color:#023047; padding:10px;border-radius:8px; display:flex; gap:10px; align-items:center; font-weight:600; }
-.nav a:hover{ background: rgba(0,53,102,0.06); transform:translateX(6px); }
-body.dark .nav a{ color:#cfe6ff }
+body.dark .sidebar{background:rgba(8,12,20,0.55);border:1px solid rgba(255,255,255,0.04)}
+.brand{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.brand img{width:56px;border-radius:8px}
+.brand h2{font-size:1.05rem;color:var(--gov-blue);margin:0}
+body.dark .brand h2{color:var(--gov-gold)}
+.small{font-size:13px;color:#274252;opacity:.85}
+body.dark .small{color:#bcd6ee;opacity:.9}
 
-/* ---------- MAIN ---------- */
-.container{ margin-left:300px; padding:28px 36px; transition: margin-left .2s ease; }
-@media(max-width:980px){ .sidebar{ display:none } .container{ margin-left:20px; padding:18px } }
+.nav{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.nav a{display:flex;align-items:center;gap:10px;padding:9px;border-radius:10px;text-decoration:none;color:#023047;font-weight:600}
+.nav a:hover{background:rgba(0,53,102,0.06);transform:translateX(6px)}
+body.dark .nav a{color:#cfe6ff}
 
-/* ---------- SEARCH (autosuggest + voice) ---------- */
-.search-wrap{ max-width:840px; margin:0 auto 18px; display:flex; gap:12px; align-items:center; }
-.search-box{ flex:1; background:var(--glass-bg); border-radius:14px; padding:12px; display:flex; align-items:center; gap:10px; border:1px solid var(--glass-border); box-shadow:var(--card-shadow); }
-.search-box input{ border:none; outline:none; background:transparent; font-size:16px; flex:1; color:inherit; }
-.suggestions{ position:relative; max-width:840px; margin:6px auto 0; }
-.suggestions-list{ position:absolute; left:0; right:0; background: white; border-radius:10px; box-shadow:0 10px 30px rgba(2,6,23,0.12); overflow:hidden; z-index:50; }
-body.dark .suggestions-list{ background:#0b1722; color:#e6eef7 }
-.suggestions-list button{ display:block; width:100%; text-align:left; padding:10px 12px; border:none; background:transparent; cursor:pointer; font-weight:600; }
-.suggestions-list button:hover{ background: rgba(0,53,102,0.04) }
+/* quick links */
+.quick{margin-top:16px;display:flex;flex-direction:column;gap:6px}
+.quick a{color:var(--gov-blue);text-decoration:none;font-weight:700}
 
-/* mic */
-.mic{ width:44px; height:44px; border-radius:10px; background:linear-gradient(180deg,#fff,#f3f8ff); border:none; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(2,6,23,0.06); cursor:pointer; }
-.mic.recording{ background:linear-gradient(90deg,#ff6b6b,#ffb36b); color:white; }
-
-/* ---------- CARDS GRID ---------- */
-.services{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; margin-top:18px; }
-.service-box{ background:rgba(255,255,255,0.55); backdrop-filter: blur(10px); padding:26px; border-radius:18px; text-align:center; border:1px solid rgba(255,255,255,0.2); box-shadow:0 14px 30px rgba(2,6,23,0.08); transition:all .35s ease; transform:perspective(1200px) translateZ(0); }
-.service-box:hover{ transform:translateY(-12px) scale(1.03); box-shadow:0 30px 50px rgba(2,6,23,0.18); }
-.service-box i{ font-size:44px; margin-bottom:10px; background:linear-gradient(45deg,#003566,#0077ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.service-box h3{ font-size:18px; margin-bottom:6px; }
-.service-box p{ font-size:14px; opacity:0.9; margin-bottom:10px; }
-.btn{ background:var(--gov-blue); color:white; padding:8px 14px; text-decoration:none; border-radius:10px; font-weight:700 }
-
-/* ---------- BOTTOM NAV (mobile) ---------- */
-.bottom-nav{ display:none; position:fixed; left:50%; transform:translateX(-50%); bottom:12px; z-index:80; background:rgba(255,255,255,0.92); border-radius:40px; padding:8px 12px; box-shadow:0 12px 30px rgba(2,6,23,0.12); gap:12px; }
-.bottom-nav a{ display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:12px; text-decoration:none; color:var(--gov-blue); font-size:18px; }
-@media(max-width:800px){ .bottom-nav{ display:flex } .container{ padding-bottom:80px } body.dark .bottom-nav{ background:#071428 } }
-
-/* ---------- FOOTER ---------- */
-.footer{ margin-top:30px; padding:12px; text-align:center; color: #07314b; opacity:0.9 }
-
-/* ---------- UTIL ---------- */
-.kv{ font-weight:700; color:var(--gov-blue) }
-.small{ font-size:13px; color: #3a556b; }
-
-/* reduced motion preference */
-@media (prefers-reduced-motion: reduce){
-  .header-animated, .service-box, .pre-bar { animation: none !important; transition: none !important; }
+/* ========== MAIN ========== */
+.main{flex:1;padding:26px 32px}
+.header{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;padding:14px;border-radius:12px;overflow:hidden;
+  background:linear-gradient(-45deg,#003566,#005ea8,#0066d1,#d4af37);background-size:400% 400%;animation:hdr 10s linear infinite;color:#fff
 }
+@keyframes hdr{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.header .left{display:flex;align-items:center;gap:12px}
+.header h1{font-size:20px;margin:0}
+.header p{font-size:13px;margin:0;opacity:.9}
+.header .controls{display:flex;gap:10px;align-items:center}
+
+/* theme toggle */
+.theme-btn{background:rgba(255,255,255,0.12);border:none;padding:8px;border-radius:10px;color:#fff;cursor:pointer}
+.theme-btn:active{transform:scale(.98)}
+
+/* ========== SEARCH + SUGGEST ========== */
+.search-row{max-width:920px;margin:18px auto;display:flex;flex-direction:column;gap:6px}
+.search-box{
+  display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:var(--card-bg);
+  border:1px solid var(--glass-border);box-shadow:var(--shadow)
+}
+.search-box input{flex:1;border:none;outline:none;background:transparent;font-size:16px;color:inherit;padding:6px}
+.mic{width:44px;height:44px;border-radius:10px;border:none;background:linear-gradient(180deg,#fff,#f3f8ff);box-shadow:0 6px 18px rgba(2,6,23,0.06);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.mic.recording{background:linear-gradient(90deg,#ff6b6b,#ffb36b);color:#fff}
+.suggest-list{display:none;position:relative;top:4px;background:#fff;border-radius:10px;box-shadow:0 12px 30px rgba(2,6,23,0.12);overflow:hidden;z-index:80}
+body.dark .suggest-list{background:#0b1722;color:#dfeeff}
+.suggest-list button{display:block;width:100%;text-align:left;padding:10px;border:none;background:transparent;cursor:pointer;font-weight:600}
+.suggest-list button:hover{background:rgba(0,53,102,0.04)}
+
+/* ========== WIDGETS / APIS ========== */
+.grid-widgets{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:14px}
+
+/* widget style */
+.widget{background:var(--card-bg);border:1px solid var(--glass-border);padding:14px;border-radius:12px;box-shadow:var(--shadow)}
+.widget .small{margin-top:8px;opacity:.85}
+
+/* ========== SERVICES CARDS ========== */
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:18px}
+.service-box{
+  background:var(--card-bg);backdrop-filter:blur(10px);padding:22px;border-radius:16px;text-align:center;border:1px solid rgba(255,255,255,0.2);
+  box-shadow:0 18px 40px rgba(2,6,23,0.06);transition:all .35s;transform:perspective(1000px) translateZ(0)
+}
+.service-box:hover{transform:translateY(-12px) scale(1.03);box-shadow:0 32px 60px rgba(2,6,23,0.14)}
+.service-box i{font-size:42px;margin-bottom:10px;display:inline-block}
+.service-box h3{font-size:18px;margin-bottom:8px}
+.service-box p{font-size:14px;opacity:.9;margin-bottom:10px}
+.btn{display:inline-block;background:var(--gov-blue);color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:700}
+
+/* Mixed icon style simulation: some icons will be outlined via CSS */
+.icon-outline{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:12px;border:2px solid rgba(0,53,102,0.08);color:var(--gov-blue);font-size:20px;background:transparent}
+body.dark .icon-outline{border:1px solid rgba(255,255,255,0.06);color:#cfe6ff}
+
+/* ========== BOTTOM NAV (4 buttons) ========== */
+.bottom-nav{display:none;position:fixed;left:50%;transform:translateX(-50%);bottom:14px;background:rgba(255,255,255,0.95);border-radius:40px;padding:6px 10px;box-shadow:0 16px 40px rgba(2,6,23,0.12);z-index:95}
+.bottom-nav a{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:12px;color:var(--gov-blue);text-decoration:none;font-size:18px}
+@media(max-width:840px){.bottom-nav{display:flex}.container-left{display:none}.main{padding-bottom:90px}}
+
+/* ========== FOOTER ========== */
+.footer{margin-top:22px;padding:12px;text-align:center;color:#0b3550;opacity:.85}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){.service-box,.header{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
 <!-- PRELOADER -->
 <div id="preloader" role="status" aria-live="polite">
-  <div class="pre-logo"><img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="logo" style="width:70px"></div>
+  <div class="pre-logo"><img alt="logo" src="https://i.ibb.co/6WqQ3R8/ashoka.png" style="width:68px"></div>
   <div class="pre-track"><div id="preBar" class="pre-bar"></div></div>
   <div class="pre-text">India Sewa Pro — Preparing your portal...</div>
 </div>
 
-<!-- SIDEBAR -->
-<nav class="sidebar" aria-label="Main navigation">
-  <div class="brand">
-    <img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="logo">
-    <div>
-      <h2>India Sewa Pro</h2>
-      <div class="small">Trusted Government Services</div>
-    </div>
-  </div>
-
-  <div class="nav">
-    <a href="#home"><i class="fa-solid fa-house"></i> Home</a>
-    <a href="#services"><i class="fa-solid fa-list-check"></i> All Services</a>
-    <a href="#docs"><i class="fa-solid fa-file"></i> Documents</a>
-    <a href="#land"><i class="fa-solid fa-map"></i> Land Records</a>
-    <a href="#support"><i class="fa-solid fa-headset"></i> Support</a>
-  </div>
-
-  <hr style="margin:12px 0; border:none; height:1px; background:rgba(0,0,0,0.04)">
-
-  <div class="small">Quick Links</div>
-  <div style="margin-top:8px">
-    <a href="https://india.gov.in" target="_blank" rel="noopener">India.gov.in</a>
-    <a href="https://digitalindia.gov.in" target="_blank" rel="noopener">Digital India</a>
-    <a href="https://umang.gov.in" target="_blank" rel="noopener">UMANG</a>
-  </div>
-
-  <hr style="margin:12px 0; border:none; height:1px; background:rgba(0,0,0,0.04)">
-
-  <div class="small">Trending</div>
-  <ul style="padding-left:18px; margin-top:8px; color:#023047">
-    <li><a href="https://sir.gov.in" target="_blank" rel="noopener">SIR</a></li>
-    <li><a href="https://pmkisan.gov.in" target="_blank" rel="noopener">PM Kisan</a></li>
-  </ul>
-</nav>
-
-<!-- MAIN CONTAINER -->
 <div class="container">
 
-  <!-- ANIMATED HEADER -->
-  <div class="header-animated" role="banner">
-    <div style="display:flex;align-items:center;gap:14px">
-      <img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="logo" style="width:64px;border-radius:10px">
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <div class="brand">
+      <img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="logo">
       <div>
-        <div style="font-size:20px;font-weight:800">India Sewa Pro</div>
-        <div style="font-size:13px;opacity:0.95">Trusted Government Services Portal</div>
+        <h2>India Sewa Pro</h2>
+        <div class="small">Trusted Government Services</div>
       </div>
     </div>
 
-    <div style="display:flex;align-items:center;gap:10px">
-      <div class="small" id="themeLabel">Auto theme</div>
-      <button id="themeToggle" class="mic" title="Toggle dark mode" aria-pressed="false"><i id="themeIcon" class="fa-solid fa-moon"></i></button>
+    <nav class="nav" aria-label="Quick links">
+      <a href="#home"><span class="fa-solid fa-house"></span> Home</a>
+      <a href="#services"><span class="fa-solid fa-list-check"></span> All Services</a>
+      <a href="#docs"><span class="fa-solid fa-file"></span> Documents</a>
+      <a href="#land"><span class="fa-solid fa-map"></span> Land Records</a>
+      <a href="#support"><span class="fa-solid fa-headset"></span> Support</a>
+    </nav>
+
+    <div class="quick" style="margin-top:14px">
+      <div class="small">Important portals</div>
+      <a href="https://sir.gov.in" target="_blank" rel="noopener">SIR Portal (Samagra / SIR)</a>
+      <a href="https://www.mponline.gov.in" target="_blank" rel="noopener">MP Online (MP forms)</a>
+      <a href="https://india.gov.in" target="_blank" rel="noopener">India.gov.in</a>
+      <a href="https://umang.gov.in" target="_blank" rel="noopener">UMANG</a>
     </div>
-  </div>
 
-  <!-- SEARCH + AUTOSUGGEST + VOICE -->
-  <div class="search-wrap" role="search">
-    <div class="search-box" style="flex:1">
-      <i class="fa fa-search" style="color:var(--gov-blue)"></i>
-      <input id="mainSearch" type="text" placeholder="Search services, e.g. 'Aadhaar update', 'PAN apply', 'PM Kisan'">
-      <button id="micBtn" class="mic" aria-pressed="false" title="Voice search"><i class="fa-solid fa-microphone"></i></button>
-    </div>
-  </div>
+  </aside>
 
-  <div class="suggestions" id="suggestWrap" aria-hidden="true">
-    <div class="suggestions-list" id="suggestList" style="display:none"></div>
-  </div>
+  <!-- MAIN -->
+  <main class="main" id="home">
 
-  <!-- ACTION WIDGETS (APIs) -->
-  <section style="margin-top:20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px;">
-
-    <!-- PIN Lookup -->
-    <div style="background:var(--glass-bg); padding:14px; border-radius:12px; border:1px solid var(--glass-border); box-shadow:var(--card-shadow)">
-      <h3 style="margin-bottom:8px">Pincode Lookup</h3>
-      <div class="small">Enter 6-digit PIN code</div>
-      <div style="display:flex;gap:8px;margin-top:10px">
-        <input id="pinInput" type="text" placeholder="e.g. 110001" style="flex:1;padding:8px;border-radius:8px;border:1px solid #e6eef6">
-        <button id="pinBtn" class="btn">Lookup</button>
+    <!-- HEADER -->
+    <div class="header" role="banner">
+      <div class="left">
+        <img alt="logo" src="https://i.ibb.co/6WqQ3R8/ashoka.png" style="width:56px;border-radius:10px">
+        <div>
+          <h1>India Sewa Pro</h1>
+          <p>Unified portal for government services — voice search, forms & lookups</p>
+        </div>
       </div>
-      <div id="pinResult" style="margin-top:10px;font-size:14px"></div>
-      <div class="small" style="margin-top:8px">Uses public API <span class="kv">api.postalpincode.in</span> (no key) — may require CORS proxy on some hosts.</div>
-    </div>
 
-    <!-- Vehicle RC (placeholder) -->
-    <div style="background:var(--glass-bg); padding:14px; border-radius:12px; border:1px solid var(--glass-border); box-shadow:var(--card-shadow)">
-      <h3 style="margin-bottom:8px">Vehicle RC Lookup</h3>
-      <div class="small">Enter vehicle registration number</div>
-      <div style="display:flex;gap:8px;margin-top:10px">
-        <input id="vehInput" type="text" placeholder="e.g. MH12AB1234" style="flex:1;padding:8px;border-radius:8px;border:1px solid #e6eef6">
-        <button id="vehBtn" class="btn">Check</button>
+      <div class="controls">
+        <div id="themeLabel" class="small" style="color:rgba(255,255,255,0.92)">Auto theme</div>
+        <button id="themeToggle" class="theme-btn" title="Toggle dark mode" aria-pressed="false"><i id="themeIcon" class="fa-solid fa-moon"></i></button>
       </div>
-      <div id="vehResult" style="margin-top:10px;font-size:14px"></div>
-      <div class="small" style="margin-top:8px">Replace <code>VEHICLE_API_ENDPOINT</code> with your server endpoint that calls the VAHAN/RC API (server-side required).</div>
     </div>
 
-    <!-- Weather lookup -->
-    <div style="background:var(--glass-bg); padding:14px; border-radius:12px; border:1px solid var(--glass-border); box-shadow:var(--card-shadow)">
-      <h3 style="margin-bottom:8px">Weather Lookup</h3>
-      <div class="small">Enter city name</div>
-      <div style="display:flex;gap:8px;margin-top:10px">
-        <input id="weatherInput" type="text" placeholder="e.g. Mumbai" style="flex:1;padding:8px;border-radius:8px;border:1px solid #e6eef6">
-        <button id="weatherBtn" class="btn">Get</button>
+    <!-- SEARCH + SUGGEST -->
+    <div class="search-row" id="searchRow">
+      <div class="search-box" role="search" aria-label="Search services">
+        <i class="fa fa-search" style="color:var(--gov-blue)"></i>
+        <input id="mainSearch" placeholder="Search services e.g. 'Aadhaar update', 'PAN apply'"/>
+        <button id="micBtn" class="mic" title="Click and speak"><i class="fa-solid fa-microphone"></i></button>
       </div>
-      <div id="weatherResult" style="margin-top:10px;font-size:14px"></div>
-      <div class="small" style="margin-top:8px">Uses OpenWeatherMap — put your API key in <code>OPENWEATHER_API_KEY</code> variable in the script below.</div>
+      <div class="suggest-list" id="suggestList" role="listbox" aria-hidden="true"></div>
     </div>
 
-  </section>
+    <!-- WIDGETS: PIN / WEATHER / Vehicle placeholders -->
+    <section class="grid-widgets" aria-label="Quick lookup widgets">
+      <div class="widget" id="pinWidget">
+        <h3>Pincode Lookup</h3>
+        <div class="small">Enter 6-digit PIN</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <input id="pinInput" placeholder="110001" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">
+          <button id="pinBtn" class="btn">Lookup</button>
+        </div>
+        <div id="pinResult" class="small" style="margin-top:10px"></div>
+      </div>
 
-  <!-- 3D Cards Grid -->
-  <section id="services" style="margin-top:22px">
-    <h2 style="margin-bottom:12px">Trending Government Services</h2>
+      <div class="widget" id="vehWidget">
+        <h3>Vehicle RC Lookup</h3>
+        <div class="small">Server endpoint required — see comments</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <input id="vehInput" placeholder="MH12AB1234" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">
+          <button id="vehBtn" class="btn">Check</button>
+        </div>
+        <div id="vehResult" class="small" style="margin-top:10px"></div>
+      </div>
 
-    <div class="services" id="servicesGrid">
-      <!-- Example cards (feel free to expand) -->
-      <div class="service-box"><i class="fa-solid fa-id-card"></i><h3>Aadhaar</h3><p>Update • Download • Status</p><a class="btn" href="https://uidai.gov.in" target="_blank">Open</a></div>
-      <div class="service-box"><i class="fa-solid fa-address-card"></i><h3>PAN</h3><p>Apply • Download • Verify</p><a class="btn" href="https://tin.tin.nsdl.com" target="_blank">Open</a></div>
-      <div class="service-box"><i class="fa-solid fa-passport"></i><h3>Passport</h3><p>Apply • Renewal</p><a class="btn" href="https://passportindia.gov.in" target="_blank">Open</a></div>
-      <div class="service-box"><i class="fa-solid fa-mobile-screen"></i><h3>UMANG</h3><p>Central Services</p><a class="btn" href="https://umang.gov.in" target="_blank">Open</a></div>
-    </div>
-  </section>
+      <div class="widget" id="weatherWidget">
+        <h3>Weather</h3>
+        <div class="small">Enter city name (OpenWeatherMap key required)</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <input id="weatherInput" placeholder="Mumbai" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">
+          <button id="weatherBtn" class="btn">Get</button>
+        </div>
+        <div id="weatherResult" class="small" style="margin-top:10px"></div>
+      </div>
+    </section>
 
-  <div class="footer">
-    © 2025 India Sewa Pro • Developed by Hyper Yamir
-  </div>
+    <!-- TRENDING / SERVICES (30) -->
+    <section id="services" style="margin-top:18px">
+      <h2 style="margin-bottom:10px">Top Government Services</h2>
+      <div class="services" id="servicesGrid">
 
+        <!-- 30 service cards (exact list user agreed) -->
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-id-card"></i></div><h3>Aadhaar Update</h3><p>Update or correct Aadhaar details</p><a class="btn" href="https://uidai.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-id-badge" style="color:var(--gov-blue)"></i><h3>Aadhaar Status</h3><p>Check enrollment & update status</p><a class="btn" href="https://myaadhaar.uidai.gov.in/" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-file-invoice-dollar"></i></div><h3>PAN Apply</h3><p>New PAN application</p><a class="btn" href="https://www.incometax.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-pen-to-square"></i><h3>PAN Correction</h3><p>Update PAN details</p><a class="btn" href="https://www.tin-nsdl.com" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-globe"></i></div><h3>Samagra / SIR</h3><p>Samagra ID / SIR forms (centralized)</p><a class="btn" href="https://sir.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-ticket-simple"></i><h3>BPL Card</h3><p>Beneficiary lists & status</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-map-location-dot"></i></div><h3>Bhulekh / Land Records</h3><p>View land record (state portal)</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-warehouse"></i><h3>Ration Card</h3><p>Apply / Check ration card</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-seedling"></i></div><h3>PM Kisan</h3><p>Farmer scheme & status</p><a class="btn" href="https://pmkisan.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-hospital-user"></i><h3>Ayushman Bharat</h3><p>Health benefit portal</p><a class="btn" href="https://pmjay.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-certificate"></i></div><h3>Birth Certificate</h3><p>Apply & download</p><a class="btn" href="https://crsorgi.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-skull-crossbones" style="opacity:.0"></i><h3>Death Certificate</h3><p>Apply & register</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-file-certificate"></i></div><h3>Income Certificate</h3><p>Issuance & status</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-users"></i><h3>Caste Certificate</h3><p>Apply and verification</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-house-user"></i></div><h3>Domicile Certificate</h3><p>Apply for residence proof</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-square-check"></i><h3>Voter ID</h3><p>Apply / Search electoral roll</p><a class="btn" href="https://nvsp.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-car"></i></div><h3>Driving License</h3><p>Apply / Renewal / Status</p><a class="btn" href="https://parivahan.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-car-rear"></i><h3>RC Status</h3><p>Vehicle registration status</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-user-shield"></i></div><h3>Police Character Certificate</h3><p>Apply for NOC / Character cert</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-graduation-cap"></i><h3>Scholarship Portal</h3><p>Apply for student scholarships</p><a class="btn" href="https://scholarships.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-id-card-clip"></i></div><h3>eShram Card</h3><p>Registration for unorganized workers</p><a class="btn" href="https://eshram.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-briefcase"></i><h3>NREGA Job Card</h3><p>Rural employment card</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-passport"></i></div><h3>Passport</h3><p>Apply or renew passport</p><a class="btn" href="https://passportindia.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-cloud"></i><h3>DigiLocker</h3><p>Store & access documents</p><a class="btn" href="https://digilocker.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-building-columns"></i></div><h3>GST Registration</h3><p>Register or file GST</p><a class="btn" href="https://www.gst.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-industry"></i><h3>MSME / Udyam</h3><p>Register micro & small enterprises</p><a class="btn" href="https://udyamregistration.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-house"></i></div><h3>Property Tax</h3><p>Pay municipal property tax</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-bolt"></i><h3>Electricity Bill</h3><p>Bill payment & status</p><a class="btn" href="https://bharatbillpay.com" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-water"></i></div><h3>Water Bill</h3><p>Pay water charges</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-person-digging"></i><h3>Labour Card</h3><p>Employment & labour services</p><a class="btn" href="#" target="_blank">Open</a></div>
+
+        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-file-pen"></i></div><h3>Income Tax</h3><p>File returns & check refunds</p><a class="btn" href="https://www.incometax.gov.in" target="_blank">Open</a></div>
+
+        <div class="service-box"><i class="fa-solid fa-hand-holding-dollar"></i><h3>PM Awas / Housing</h3><p>Housing scheme benefits</p><a class="btn" href="https://pmaymis.gov.in" target="_blank">Open</a></div>
+
+      </div>
+    </section>
+
+    <div class="footer">© 2025 India Sewa Pro • Developed by Hyper Yamir</div>
+
+  </main>
 </div>
 
-<!-- BOTTOM NAV (mobile) -->
-<nav class="bottom-nav" role="navigation" aria-label="Mobile navigation">
+<!-- BOTTOM NAV (4 buttons) -->
+<nav class="bottom-nav" aria-label="Mobile navigation" role="navigation">
   <a href="#home" title="Home"><i class="fa-solid fa-house"></i></a>
-  <a href="#search" title="Search"><i class="fa-solid fa-search"></i></a>
-  <a href="#services" title="Services"><i class="fa-solid fa-list"></i></a>
+  <a href="#search" title="Search" id="bnSearch"><i class="fa-solid fa-search"></i></a>
+  <a href="#services" title="Services"><i class="fa-solid fa-list-check"></i></a>
   <a href="#profile" title="Profile"><i class="fa-solid fa-user"></i></a>
 </nav>
 
 <script>
-/* ================== Initial preloader ================== */
-const preBar = document.getElementById('preBar');
-function animatePreloader(){
-  setTimeout(()=> preBar.style.width = '30%', 220);
-  setTimeout(()=> preBar.style.width = '62%', 620);
-  setTimeout(()=> preBar.style.width = '92%', 1120);
-  setTimeout(()=> {
-    preBar.style.width = '100%';
-    setTimeout(()=> {
-      document.getElementById('preloader').style.display = 'none';
-      // after preloader hide: check system preference for theme
-      initTheme();
-    }, 420);
-  }, 1600);
-}
-animatePreloader();
+/* ---------- PRELOADER ANIMATION ---------- */
+(function(){
+  const bar = document.getElementById('preBar');
+  setTimeout(()=> bar.style.width='30%',200);
+  setTimeout(()=> bar.style.width='64%',700);
+  setTimeout(()=> bar.style.width='92%',1200);
+  setTimeout(()=> { bar.style.width='100%'; setTimeout(()=> document.getElementById('preloader').style.display='none',420); },1700);
+})();
 
-/* ================== THEME / DARK MODE ================== */
+/* ---------- THEME / DARK MODE ---------- */
 const themeToggle = document.getElementById('themeToggle');
 const themeIcon = document.getElementById('themeIcon');
 const themeLabel = document.getElementById('themeLabel');
-
-function initTheme(){
-  const saved = localStorage.getItem('isDark');
-  if(saved === null){
-    // follow system preference
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setDark(prefersDark);
-    themeLabel.textContent = prefersDark ? 'Dark (system)' : 'Light (system)';
-  } else {
-    setDark(saved === 'true');
-    themeLabel.textContent = (saved === 'true') ? 'Dark (saved)' : 'Light (saved)';
-  }
+function applyTheme(isDark){
+  if(isDark){ document.body.classList.add('dark'); themeIcon.className='fa-solid fa-sun'; themeToggle.setAttribute('aria-pressed','true'); themeLabel.textContent='Dark (saved)'; }
+  else{ document.body.classList.remove('dark'); themeIcon.className='fa-solid fa-moon'; themeToggle.setAttribute('aria-pressed','false'); themeLabel.textContent='Light (saved)'; }
 }
-
-function setDark(enable){
-  if(enable){ document.body.classList.add('dark'); themeIcon.className = 'fa-solid fa-sun'; themeToggle.setAttribute('aria-pressed','true'); }
-  else{ document.body.classList.remove('dark'); themeIcon.className = 'fa-solid fa-moon'; themeToggle.setAttribute('aria-pressed','false'); }
-}
-themeToggle.addEventListener('click', () => {
-  const isDarkNow = document.body.classList.toggle('dark');
-  localStorage.setItem('isDark', isDarkNow ? 'true' : 'false');
-  themeIcon.className = isDarkNow ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-  themeLabel.textContent = isDarkNow ? 'Dark (saved)' : 'Light (saved)';
+(function initTheme(){
+  const s = localStorage.getItem('isDark');
+  if(s===null){
+    const prefers = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(prefers);
+    themeLabel.textContent = prefers ? 'Dark (system)' : 'Light (system)';
+  } else { applyTheme(s==='true'); }
+})();
+themeToggle.addEventListener('click', ()=>{
+  const now = !document.body.classList.contains('dark');
+  applyTheme(now);
+  localStorage.setItem('isDark', now ? 'true' : 'false');
 });
 
-/* ================== VOICE SEARCH ================== */
+/* ---------- VOICE SEARCH (web speech) ---------- */
 const micBtn = document.getElementById('micBtn');
 const mainSearch = document.getElementById('mainSearch');
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
@@ -321,160 +350,99 @@ if(SpeechRecognition){
   recognition = new SpeechRecognition();
   recognition.lang = 'en-IN';
   recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-  recognition.onstart = () => micBtn.classList.add('recording');
-  recognition.onend = () => micBtn.classList.remove('recording');
-  recognition.onresult = (e) => {
-    const t = e.results[0][0].transcript;
-    mainSearch.value = t;
-    triggerSearch(t);
-  };
-  micBtn.onclick = ()=> {
-    try { recognition.start(); } catch(err) { console.error(err); }
-  };
+  recognition.onstart = ()=> micBtn.classList.add('recording');
+  recognition.onend = ()=> micBtn.classList.remove('recording');
+  recognition.onresult = (e)=> { const t = e.results[0][0].transcript; mainSearch.value = t; triggerSearch(t); };
+  micBtn.addEventListener('click', ()=> {
+    try{ recognition.start(); } catch(e){ console.warn(e); }
+  });
 } else {
-  micBtn.onclick = ()=> alert('Voice search unsupported — use Chrome/Edge (desktop/Android).');
+  micBtn.addEventListener('click', ()=> alert('Voice search unsupported. Use Chrome/Edge (desktop/Android).'));
 }
 
-/* ============== AUTOSUGGEST (local + optional remote) ============== */
+/* ---------- AUTOSUGGEST (simple local) ---------- */
 const suggestList = document.getElementById('suggestList');
-const suggestWrap = document.getElementById('suggestWrap');
-const suggestions = [
-  "Aadhaar update", "Aadhaar download", "PAN apply", "PAN correction",
-  "Passport appointment", "Passport status", "Land records", "Bhulekh",
-  "PM Kisan status", "UMANG registration", "Electricity bill", "Ration card"
+const sampleSuggestions = [
+  "Aadhaar update","Aadhaar status","PAN apply","PAN correction","Samagra / SIR",
+  "Bhulekh land records","PM Kisan status","UMANG","Passport appointment","DigiLocker",
+  "Voter ID search","Driving License","RC status","Ayushman Bharat","Income certificate",
+  "Domicile certificate","Ration card apply","PM Awas","GST registration","MSME Udyam"
 ];
 
-// show suggestions based on input
-mainSearch.addEventListener('input', (e) => {
-  const q = e.target.value.trim().toLowerCase();
-  if(!q){ suggestList.style.display='none'; suggestWrap.setAttribute('aria-hidden','true'); return; }
-  // local suggestions
-  const local = suggestions.filter(s => s.toLowerCase().includes(q)).slice(0,6);
-  // optional: fetch remote suggestions if you have an endpoint
-  // fetch('/api/suggest?q='+encodeURIComponent(q)).then(...) // implement server-side if wanted
-  renderSuggestions(local, q);
-});
-
-function renderSuggestions(items, q){
-  if(!items.length){ suggestList.style.display='none'; suggestWrap.setAttribute('aria-hidden','true'); return; }
-  suggestList.innerHTML = '';
-  items.forEach(it => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.innerHTML = it.replace(new RegExp('('+escapeReg(q)+')','i'), '<strong>$1</strong>');
-    btn.onclick = ()=> { mainSearch.value = it; suggestList.style.display='none'; suggestWrap.setAttribute('aria-hidden','true'); triggerSearch(it); };
-    suggestList.appendChild(btn);
+mainSearch.addEventListener('input', (e)=>{
+  const q = String(e.target.value||'').trim().toLowerCase();
+  if(!q){ suggestList.style.display='none'; suggestList.setAttribute('aria-hidden','true'); return; }
+  const matches = sampleSuggestions.filter(s=> s.toLowerCase().includes(q)).slice(0,8);
+  if(!matches.length){ suggestList.style.display='none'; suggestList.setAttribute('aria-hidden','true'); return; }
+  suggestList.innerHTML = matches.map(m=> `<button type="button" class="sug-btn">${m}</button>`).join('');
+  suggestList.style.display='block'; suggestList.setAttribute('aria-hidden','false');
+  Array.from(suggestList.querySelectorAll('.sug-btn')).forEach(btn=>{
+    btn.addEventListener('click', ()=> { mainSearch.value = btn.textContent; suggestList.style.display='none'; triggerSearch(btn.textContent); });
   });
-  suggestList.style.display = 'block';
-  suggestWrap.setAttribute('aria-hidden','false');
-}
-function escapeReg(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
-
-/* Press Enter to search */
-mainSearch.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter'){ triggerSearch(mainSearch.value.trim()); }
 });
+document.addEventListener('click', (e)=>{ if(!document.getElementById('searchRow').contains(e.target)) { suggestList.style.display='none'; } });
+mainSearch.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ triggerSearch(mainSearch.value.trim()); } });
 
-/* trigger search - currently shows simulated results in servicesGrid (expandable) */
-function triggerSearch(query){
-  if(!query) return;
-  // Simple demo: highlight services that match, or append a result card
+/* ---------- SEARCH HANDLER (demo) ---------- */
+function triggerSearch(q){
+  if(!q) return;
+  // push a result card at top of services for demo
   const grid = document.getElementById('servicesGrid');
-  const card = document.createElement('div');
-  card.className = 'service-box';
-  card.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i><h3>Search: ${escapeHtml(query)}</h3><p>Suggested links & services for "<strong>${escapeHtml(query)}</strong>".</p>`;
+  const card = document.createElement('div'); card.className='service-box';
+  card.innerHTML = `<i class="fa-solid fa-magnifying-glass" style="color:var(--gov-blue)"></i><h3>Search: ${escapeHtml(q)}</h3><p>Quick suggestions & links for "${escapeHtml(q)}".</p>`;
   grid.prepend(card);
-  // update URL for SEO/analytics
-  if(history && history.pushState) history.pushState({}, '', '?q=' + encodeURIComponent(query));
+  if(history && history.pushState) history.pushState({},'', '?q='+encodeURIComponent(q));
 }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, (m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m])); }
 
-/* ================== PIN LOOKUP (api.postalpincode.in) ================== */
+/* ---------- PIN LOOKUP (public API) ---------- */
 document.getElementById('pinBtn').addEventListener('click', async ()=>{
   const pin = document.getElementById('pinInput').value.trim();
   const out = document.getElementById('pinResult');
-  out.innerHTML = 'Searching...';
-  if(!/^\d{6}$/.test(pin)){ out.innerHTML = '<span style="color:#c0392b">Enter valid 6-digit PIN</span>'; return; }
-  try {
-    const res = await fetch('https://api.postalpincode.in/pincode/' + pin);
-    // Note: some hosts may block direct CORS; if blocked, set up a proxy endpoint.
-    const data = await res.json();
-    if(Array.isArray(data) && data[0].Status === 'Success'){
-      const post = data[0].PostOffice[0];
-      out.innerHTML = `<strong>${post.Name}</strong>, ${post.District}, ${post.State} <div class="small">Delivery: ${post.DeliveryStatus}</div>`;
-    } else {
-      out.innerHTML = '<span style="color:#c0392b">No results for this PIN</span>';
-    }
-  } catch(err){
-    console.error(err);
-    out.innerHTML = '<span style="color:#c0392b">Lookup failed — CORS or network issue. Use server proxy if needed.</span>';
-  }
+  out.textContent = 'Searching...';
+  if(!/^\d{6}$/.test(pin)){ out.innerHTML = '<span style="color:#c0392b">Enter a valid 6-digit PIN</span>'; return; }
+  try{
+    const res = await fetch('https://api.postalpincode.in/pincode/'+encodeURIComponent(pin));
+    const j = await res.json();
+    if(Array.isArray(j) && j[0].Status==='Success'){ const p = j[0].PostOffice[0]; out.innerHTML = `${p.Name}, ${p.District}, ${p.State}`; }
+    else out.innerHTML = '<span style="color:#c0392b">No results</span>';
+  }catch(err){ out.innerHTML = '<span style="color:#c0392b">Lookup failed (CORS/network)</span>'; }
 });
 
-/* ================== VEHICLE RC (placeholder) ================== */
+/* ---------- VEHICLE RC: placeholder (server-side required) ---------- */
 document.getElementById('vehBtn').addEventListener('click', async ()=>{
   const reg = document.getElementById('vehInput').value.trim();
   const out = document.getElementById('vehResult');
-  if(!reg){ out.innerHTML = '<span style="color:#c0392b">Enter registration number</span>'; return; }
-  out.innerHTML = 'Checking...';
-  // Replace below with your server endpoint which calls government/VAHAN API (server-side)
-  const VEHICLE_API_ENDPOINT = 'https://your-server.example.com/api/vehicle?reg=' + encodeURIComponent(reg);
-  try {
-    const res = await fetch(VEHICLE_API_ENDPOINT);
-    if(res.ok){
-      const dd = await res.json();
-      // Example expected shape: { make:"", model:"", owner:"", status:"" }
-      out.innerHTML = `<div><strong>${dd.make || 'Make' } ${dd.model || ''}</strong></div><div class="small">Status: ${dd.status||'N/A'}</div>`;
-    } else {
-      out.innerHTML = '<span style="color:#c0392b">Vehicle API returned error. Configure server endpoint.</span>';
-    }
-  } catch(err){
-    console.error(err);
-    out.innerHTML = '<span style="color:#c0392b">Vehicle lookup failed — replace VEHICLE_API_ENDPOINT with your server proxy.</span>';
-  }
+  if(!reg){ out.innerHTML = '<span style="color:#c0392b">Enter reg. number</span>'; return; }
+  out.textContent = 'Checking...';
+  // Replace the URL below with your server-side endpoint which queries VAHAN/RC
+  const SERVER_VEHICLE_ENDPOINT = 'https://your-server.example.com/api/vehicle?reg=' + encodeURIComponent(reg);
+  try{
+    const r = await fetch(SERVER_VEHICLE_ENDPOINT);
+    if(!r.ok){ out.innerHTML='<span style="color:#c0392b">Server endpoint error</span>'; return; }
+    const data = await r.json(); out.innerHTML = `<strong>${data.make||'Make'} ${data.model||''}</strong><div class="small">Status: ${data.status||'N/A'}</div>`;
+  }catch(err){ out.innerHTML = '<span style="color:#c0392b">Vehicle lookup failed — configure server proxy</span>'; }
 });
 
-/* ================== WEATHER (OpenWeatherMap) ================== */
-const OPENWEATHER_API_KEY = ''; // <-- PUT your OpenWeatherMap API KEY here
+/* ---------- WEATHER (OpenWeatherMap) ---------- */
+const OPENWEATHER_API_KEY = ''; // <-- Put your OpenWeatherMap API KEY here
 document.getElementById('weatherBtn').addEventListener('click', async ()=>{
   const city = document.getElementById('weatherInput').value.trim();
   const out = document.getElementById('weatherResult');
   if(!city){ out.innerHTML = '<span style="color:#c0392b">Enter city</span>'; return; }
-  if(!OPENWEATHER_API_KEY){ out.innerHTML = '<span style="color:#c0392b">No API key configured. Add OPENWEATHER_API_KEY in the code.</span>'; return; }
-  out.innerHTML = 'Fetching weather...';
-  try {
+  if(!OPENWEATHER_API_KEY){ out.innerHTML = '<span style="color:#c0392b">No API key set in code</span>'; return; }
+  out.textContent = 'Fetching...';
+  try{
     const resp = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&units=metric&appid=${OPENWEATHER_API_KEY}`);
-    if(!resp.ok){ out.innerHTML = '<span style="color:#c0392b">City not found or API error</span>'; return; }
-    const j = await resp.json();
-    out.innerHTML = `<div><strong>${j.name}</strong> — ${j.weather[0].description}, ${j.main.temp} °C</div><div class="small">Humidity: ${j.main.humidity}% • Wind: ${j.wind.speed} m/s</div>`;
-  } catch(err){
-    console.error(err);
-    out.innerHTML = '<span style="color:#c0392b">Weather lookup failed — check API key & CORS.</span>';
-  }
+    if(!resp.ok){ out.innerHTML='<span style="color:#c0392b">City not found or API key error</span>'; return; }
+    const j = await resp.json(); out.innerHTML = `<strong>${j.name}</strong> - ${j.weather[0].description}, ${j.main.temp}°C`;
+  }catch(e){ out.innerHTML = '<span style="color:#c0392b">Weather lookup failed</span>'; }
 });
 
-/*  ================== MISC UTILITIES ================== */
-function escapeHtml(s){ return String(s).replace(/[&<>"']/g, (m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+/* ---------- BOTTOM NAV: scroll behavior (mobile) ---------- */
+document.getElementById('bnSearch').addEventListener('click', (e)=>{ e.preventDefault(); document.getElementById('mainSearch').focus(); window.scrollTo({top:0,behavior:'smooth'}); });
 
-/* Accessibility: close suggestions when clicking outside */
-document.addEventListener('click', (e)=>{
-  if(!document.getElementById('suggestWrap').contains(e.target) && e.target !== mainSearch){
-    document.getElementById('suggestList').style.display='none';
-    document.getElementById('suggestWrap').setAttribute('aria-hidden','true');
-  }
-});
-
-/* ------------------ small SEO-friendly pushState when using suggestions ------------------ */
-function setQueryParam(q){
-  if(history && history.replaceState) history.replaceState({}, '', q ? '?q=' + encodeURIComponent(q) : location.pathname);
-}
-
-/* Respect prefers-reduced-motion for preloader */
-if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-  document.querySelectorAll('.pre-bar').forEach(b => b.style.transition='none');
-}
-
+/* ---------- Accessibility: reduce motion handling already via CSS media query ---------- */
 </script>
-
 </body>
 </html>
