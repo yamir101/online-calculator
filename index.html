@@ -3,496 +3,477 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>India Sewa Pro — Voice Search & Sidebar</title>
+<title>India Sewa Pro — Full Premium Portal (Dark mode, Voice, 3D, APIs)</title>
 
-<!-- Basic SEO meta (we'll expand in Part-2) -->
-<meta name="description" content="India Sewa Pro — Trusted Government Services Portal. Voice search, modern UI, quick links and responsive layout." />
-<meta name="keywords" content="India Sewa, government services, Aadhaar, PAN, voice search, bhulekh, PM Sewa" />
-<link rel="icon" href="https://i.ibb.co/6WqQ3R8/ashoka.png" />
+<meta name="description" content="India Sewa Pro — All-in-one modern government services portal with voice search, dark mode, autosuggest, PIN & weather lookups, 3D cards and mobile nav." />
+<meta name="keywords" content="India Sewa, government services, Aadhaar, PAN, voice search, bhulekh, PM Sewa, PIN lookup, vehicle RC, weather" />
 
-<!-- Fonts & icons -->
+<link rel="icon" href="https://i.ibb.co/6WqQ3R8/ashoka.png">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 <style>
-  :root{
-    --gov-blue:#003566;
-    --gov-gold:#d4af37;
-    --glass-bg: rgba(255,255,255,0.65);
-    --glass-border: rgba(255,255,255,0.15);
-    --card-shadow: 0 12px 30px rgba(2,6,23,0.12);
-  }
+/* ----------------- THEME & RESET ----------------- */
+:root{
+  --gov-blue: #003566;
+  --gov-gold: #d4af37;
+  --bg-light: linear-gradient(180deg,#eef6ff 0%, #e6eefc 100%);
+  --bg-dark: linear-gradient(180deg,#071022 0%, #07162a 100%);
+  --glass-bg: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.15);
+  --card-shadow: 0 12px 30px rgba(2,6,23,0.12);
+  --accent: #0077ff;
+}
 
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(180deg,#eef6ff 0%, #e6eefc 100%);
-    color:#0b1a2b;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    transition: background .25s ease, color .25s ease;
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family: 'Roboto', sans-serif;-webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
 
-  /* ---------- PRELOADER ---------- */
-  .preloader{
-    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-    background:linear-gradient(180deg, rgba(3,37,76,0.85), rgba(0,25,50,0.9));
-    z-index:9999;flex-direction:column;color:white;
-  }
-  .preloader .logo{
-    width:86px;height:86px;border-radius:18px;
-    background:linear-gradient(135deg,var(--gov-blue),#072a4b);
-    display:flex;align-items:center;justify-content:center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.45), inset 0 -4px 12px rgba(0,0,0,0.2);
-    margin-bottom:16px;
-    transform: translateZ(0);
-  }
-  .preloader .logo img{width:60px}
-  .preloader .loader-track{
-    width:220px;height:10px;background:rgba(255,255,255,0.12);
-    border-radius:10px;overflow:hidden;
-  }
-  .preloader .loader-bar{
-    height:100%;width:0%;
-    background: linear-gradient(90deg,var(--gov-gold), #ffd86b);
-    border-radius:10px;
-    transition: width 1s cubic-bezier(.2,.9,.3,1);
-    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
-  }
-  .preloader .text{margin-top:12px;opacity:0.95;font-weight:500}
+/* ---------- PAGE LAYOUT ---------- */
+body{ background:var(--bg-light); color:#072032; transition: background .25s ease, color .25s ease; }
+body.dark{ background:var(--bg-dark); color:#e6eef7; }
 
-  /* ---------- LAYOUT ---------- */
-  .layout{
-    display:flex;min-height:100vh;
-  }
+/* animated header gradient */
+.header-animated{
+  padding:20px 28px; border-radius:12px; margin-bottom:18px;
+  background: linear-gradient(-45deg,#003566,#005ea8,#0066d1,#d4af37);
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite;
+  color: white;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+}
+@keyframes gradientShift{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
 
-  /* ---------- SIDEBAR ---------- */
-  .sidebar{
-    width:260px;flex:0 0 260px;background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(240,247,255,0.75));
-    border-right:1px solid rgba(0,53,102,0.06);
-    padding:20px;position:sticky;top:0;height:100vh;
-    backdrop-filter: blur(6px);
-  }
-  .sidebar .brand{
-    display:flex;align-items:center;gap:12px;margin-bottom:18px;
-  }
-  .sidebar .brand img{width:58px}
-  .sidebar h2{font-size:1.08rem;color:var(--gov-blue);margin-bottom:2px}
-  .sidebar p{font-size:0.86rem;color:#334455;opacity:0.9}
+/* ---------- PRELOADER (SUPER) ---------- */
+#preloader{
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column;
+  background: rgba(3, 37, 76, 0.92); z-index:99999; color:white;
+}
+.pre-logo{ width:110px; height:110px; border-radius:18px; display:flex;align-items:center;justify-content:center;
+  background: linear-gradient(135deg,#003566,#072a4b); box-shadow:0 18px 40px rgba(0,0,0,0.55); margin-bottom:18px;
+}
+.pre-track{ width:320px; height:12px; background: rgba(255,255,255,0.12); border-radius:12px; overflow:hidden; }
+.pre-bar{ height:100%; width:0%; background:linear-gradient(90deg,#d4af37,#ffd86b); border-radius:12px; transition:width 800ms cubic-bezier(.2,.9,.3,1); box-shadow:0 6px 18px rgba(0,0,0,0.45); margin-bottom:10px; }
+.pre-text{ opacity:0.95; font-weight:600; }
 
-  .nav-section{margin-top:20px}
-  .nav-section h4{font-size:0.82rem;color:#345;opacity:0.9;margin:12px 0}
-  .nav-list{list-style:none;display:flex;flex-direction:column;gap:8px}
-  .nav-list a{
-    display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;color:#023047;text-decoration:none;
-    transition:all .18s ease;font-weight:500;font-size:0.95rem;
-  }
-  .nav-list a i{width:28;text-align:center;color:var(--gov-blue)}
-  .nav-list a:hover{background:rgba(0,53,102,0.06);transform:translateX(6px)}
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px; position:fixed; left:18px; top:18px; bottom:18px; padding:18px; border-radius:12px;
+  background: rgba(255,255,255,0.92); box-shadow: 0 12px 40px rgba(2,6,23,0.06);
+  border:1px solid rgba(0,53,102,0.04); backdrop-filter: blur(6px); overflow:auto;
+}
+body.dark .sidebar{ background: rgba(10,15,25,0.65); border:1px solid rgba(255,255,255,0.04); }
+.brand{ display:flex; gap:12px; align-items:center; margin-bottom:8px; }
+.brand img{ width:56px; border-radius:10px; }
+.brand h2{ font-size:1.1rem; color:var(--gov-blue); margin:0; }
+body.dark .brand h2{ color:#ffd86b; }
+.sidebar .nav{ margin-top:12px; display:flex; flex-direction:column; gap:8px; }
+.nav a{ text-decoration:none; color:#023047; padding:10px;border-radius:8px; display:flex; gap:10px; align-items:center; font-weight:600; }
+.nav a:hover{ background: rgba(0,53,102,0.06); transform:translateX(6px); }
+body.dark .nav a{ color:#cfe6ff }
 
-  .quick-links{margin-top:18px}
-  .quick-links a{
-    display:inline-block;padding:8px 10px;margin:6px 6px 0 0;border-radius:8px;background:rgba(0,53,102,0.06);
-    color:var(--gov-blue);text-decoration:none;font-weight:600;font-size:0.85rem;
-  }
+/* ---------- MAIN ---------- */
+.container{ margin-left:300px; padding:28px 36px; transition: margin-left .2s ease; }
+@media(max-width:980px){ .sidebar{ display:none } .container{ margin-left:20px; padding:18px } }
 
-  /* ---------- MAIN ---------- */
-  .main{
-    flex:1;padding:28px;
-  }
+/* ---------- SEARCH (autosuggest + voice) ---------- */
+.search-wrap{ max-width:840px; margin:0 auto 18px; display:flex; gap:12px; align-items:center; }
+.search-box{ flex:1; background:var(--glass-bg); border-radius:14px; padding:12px; display:flex; align-items:center; gap:10px; border:1px solid var(--glass-border); box-shadow:var(--card-shadow); }
+.search-box input{ border:none; outline:none; background:transparent; font-size:16px; flex:1; color:inherit; }
+.suggestions{ position:relative; max-width:840px; margin:6px auto 0; }
+.suggestions-list{ position:absolute; left:0; right:0; background: white; border-radius:10px; box-shadow:0 10px 30px rgba(2,6,23,0.12); overflow:hidden; z-index:50; }
+body.dark .suggestions-list{ background:#0b1722; color:#e6eef7 }
+.suggestions-list button{ display:block; width:100%; text-align:left; padding:10px 12px; border:none; background:transparent; cursor:pointer; font-weight:600; }
+.suggestions-list button:hover{ background: rgba(0,53,102,0.04) }
 
-  header{
-    display:flex;align-items:center;gap:18px;justify-content:space-between;margin-bottom:18px;
-  }
-  .header-left{display:flex;align-items:center;gap:14px}
-  .header-left h1{font-size:1.4rem;color:var(--gov-blue)}
-  .header-left p{font-size:0.9rem;color:#234;opacity:0.8}
+/* mic */
+.mic{ width:44px; height:44px; border-radius:10px; background:linear-gradient(180deg,#fff,#f3f8ff); border:none; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(2,6,23,0.06); cursor:pointer; }
+.mic.recording{ background:linear-gradient(90deg,#ff6b6b,#ffb36b); color:white; }
 
-  /* search bar container */
-  .search-wrap{
-    max-width:820px;width:100%;
-    background:var(--glass-bg);
-    border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px;
-    box-shadow: var(--card-shadow);
-    border:1px solid var(--glass-border);
-    backdrop-filter: blur(8px);
-  }
+/* ---------- CARDS GRID ---------- */
+.services{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; margin-top:18px; }
+.service-box{ background:rgba(255,255,255,0.55); backdrop-filter: blur(10px); padding:26px; border-radius:18px; text-align:center; border:1px solid rgba(255,255,255,0.2); box-shadow:0 14px 30px rgba(2,6,23,0.08); transition:all .35s ease; transform:perspective(1200px) translateZ(0); }
+.service-box:hover{ transform:translateY(-12px) scale(1.03); box-shadow:0 30px 50px rgba(2,6,23,0.18); }
+.service-box i{ font-size:44px; margin-bottom:10px; background:linear-gradient(45deg,#003566,#0077ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.service-box h3{ font-size:18px; margin-bottom:6px; }
+.service-box p{ font-size:14px; opacity:0.9; margin-bottom:10px; }
+.btn{ background:var(--gov-blue); color:white; padding:8px 14px; text-decoration:none; border-radius:10px; font-weight:700 }
 
-  .search-wrap .left{
-    display:flex;align-items:center;gap:10px;flex:1;
-  }
-  .search-input{
-    border:none;outline:none;font-size:16px;width:100%;
-    background:transparent;padding:8px 6px;color:inherit;
-  }
-  .search-actions{display:flex;gap:8px}
+/* ---------- BOTTOM NAV (mobile) ---------- */
+.bottom-nav{ display:none; position:fixed; left:50%; transform:translateX(-50%); bottom:12px; z-index:80; background:rgba(255,255,255,0.92); border-radius:40px; padding:8px 12px; box-shadow:0 12px 30px rgba(2,6,23,0.12); gap:12px; }
+.bottom-nav a{ display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:12px; text-decoration:none; color:var(--gov-blue); font-size:18px; }
+@media(max-width:800px){ .bottom-nav{ display:flex } .container{ padding-bottom:80px } body.dark .bottom-nav{ background:#071428 } }
 
-  .btn{
-    border:none;padding:9px 14px;border-radius:10px;background:var(--gov-blue);color:white;cursor:pointer;font-weight:600;
-    display:inline-flex;align-items:center;gap:8px;
-  }
-  .btn.secondary{
-    background:transparent;color:var(--gov-blue);border:1px solid rgba(0,53,102,0.12)
-  }
+/* ---------- FOOTER ---------- */
+.footer{ margin-top:30px; padding:12px; text-align:center; color: #07314b; opacity:0.9 }
 
-  /* mic button */
-  .mic-btn{
-    width:44px;height:44px;border-radius:10px;border:none;background:linear-gradient(180deg,#fff,#f3f8ff);
-    box-shadow: 0 6px 18px rgba(2,6,23,0.06);display:flex;align-items:center;justify-content:center;cursor:pointer;
-  }
-  .mic-btn.recording{background:linear-gradient(90deg,#ff6b6b,#ffb36b);color:white;box-shadow:0 8px 30px rgba(255,107,107,0.18)}
+/* ---------- UTIL ---------- */
+.kv{ font-weight:700; color:var(--gov-blue) }
+.small{ font-size:13px; color: #3a556b; }
 
-  /* small helper text */
-  .hint{font-size:0.85rem;color:#234;opacity:0.7;margin-top:8px}
-
-  /* responsive */
-  @media (max-width:980px){
-    .sidebar{display:none}
-    .layout{flex-direction:column}
-    .main{padding:18px}
-  }
+/* reduced motion preference */
+@media (prefers-reduced-motion: reduce){
+  .header-animated, .service-box, .pre-bar { animation: none !important; transition: none !important; }
+}
 </style>
-	/* SUPER 3D GLASS CARDS */
-.service-box{
-  background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(12px);
-  padding: 30px;
-  border-radius: 20px;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.4);
-
-  box-shadow:
-      0 10px 20px rgba(0,0,0,0.20),
-      0 6px 15px rgba(0,0,0,0.15),
-      inset 0 0 8px rgba(255,255,255,0.4);
-
-  transform: perspective(1000px) translateZ(0px);
-  transition: all .35s ease;
-}
-
-.service-box:hover{
-  transform: perspective(1200px) translateY(-14px) translateZ(25px) scale(1.05);
-  box-shadow:
-      0 20px 30px rgba(0,0,0,0.35),
-      0 8px 25px rgba(0,0,0,0.20),
-      inset 0 0 12px rgba(255,255,255,0.5);
-}
-
-.service-box i{
-  font-size: 55px;
-  margin-bottom: 12px;
-  background: linear-gradient(45deg,#003566,#0077ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.service-box h3{
-  font-size: 23px;
-  margin-bottom: 8px;
-  font-weight: 700;
-}
-
-.service-box p{
-  font-size: 15px;
-  margin-bottom: 10px;
-}
 </head>
 <body>
-	<!-- LEFT SIDEBAR -->
-<div class="sidebar">
-    <h2>Navigation</h2>
-    <a href="#">Home</a>
-    <a href="#">All Services</a>
-    <a href="#">Documents</a>
-    <a href="#">ID Cards</a>
-    <a href="#">Certificates</a>
-    <a href="#">Gov Schemes</a>
-    <a href="#">Support</a>
+
+<!-- PRELOADER -->
+<div id="preloader" role="status" aria-live="polite">
+  <div class="pre-logo"><img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="logo" style="width:70px"></div>
+  <div class="pre-track"><div id="preBar" class="pre-bar"></div></div>
+  <div class="pre-text">India Sewa Pro — Preparing your portal...</div>
 </div>
 
-<!-- MAIN CONTENT -->
-<div class="content">
-
-<header>
-  <img src="https://i.ibb.co/6WqQ3R8/ashoka.png">
-  <h1>India Sewa Pro</h1>
-  <p>Trusted Government Services Portal</p>
-</header>
-
-<!-- SEARCH + VOICE SEARCH -->
-<div class="search-container">
-    <i class="fa fa-search"></i>
-    <input type="text" id="searchInput" placeholder="Search services...">
-    <button class="mic-btn" onclick="startVoiceSearch()">
-        <i class="fa-solid fa-microphone"></i>
-    </button>
-</div>
-
-<!-- SERVICES GRID -->
-<section>
-    <h2 class="title">Trending Government Services</h2>
-
-    <div class="services">
-
-        <div class="service-box">
-            <i class="fa-solid fa-id-card"></i>
-            <h3>Aadhaar Card</h3>
-            <p>Update • Download • Check Status</p>
-            <a class="btn" href="https://uidai.gov.in">Open</a>
-        </div>
-
-        <div class="service-box">
-            <i class="fa-solid fa-globe"></i>
-            <h3>SIR Portal</h3>
-            <p>Social Information Report System</p>
-            <a class="btn" href="#">Open</a>
-        </div>
-
-        <div class="service-box">
-            <i class="fa-solid fa-landmark"></i>
-            <h3>India.gov.in</h3>
-            <p>Government of India Official Portal</p>
-            <a class="btn" href="https://india.gov.in">Open</a>
-        </div>
-
-        <div class="service-box">
-            <i class="fa-solid fa-mobile-screen"></i>
-            <h3>UMANG</h3>
-            <p>Centralized Government Services</p>
-            <a class="btn" href="https://umang.gov.in">Open</a>
-        </div>
-
-        <div class="service-box">
-            <i class="fa-solid fa-id-badge"></i>
-            <h3>PM Sewa Portal</h3>
-            <p>New Central Govt Service System</p>
-            <a class="btn" href="#">Open</a>
-        </div>
-
-        <div class="service-box">
-            <i class="fa-solid fa-passport"></i>
-            <h3>Passport</h3>
-            <p>Apply • Renewal • Police Verification</p>
-            <a class="btn" href="https://passportindia.gov.in">Open</a>
-        </div>
-
+<!-- SIDEBAR -->
+<nav class="sidebar" aria-label="Main navigation">
+  <div class="brand">
+    <img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="logo">
+    <div>
+      <h2>India Sewa Pro</h2>
+      <div class="small">Trusted Government Services</div>
     </div>
-</section>
+  </div>
+
+  <div class="nav">
+    <a href="#home"><i class="fa-solid fa-house"></i> Home</a>
+    <a href="#services"><i class="fa-solid fa-list-check"></i> All Services</a>
+    <a href="#docs"><i class="fa-solid fa-file"></i> Documents</a>
+    <a href="#land"><i class="fa-solid fa-map"></i> Land Records</a>
+    <a href="#support"><i class="fa-solid fa-headset"></i> Support</a>
+  </div>
+
+  <hr style="margin:12px 0; border:none; height:1px; background:rgba(0,0,0,0.04)">
+
+  <div class="small">Quick Links</div>
+  <div style="margin-top:8px">
+    <a href="https://india.gov.in" target="_blank" rel="noopener">India.gov.in</a>
+    <a href="https://digitalindia.gov.in" target="_blank" rel="noopener">Digital India</a>
+    <a href="https://umang.gov.in" target="_blank" rel="noopener">UMANG</a>
+  </div>
+
+  <hr style="margin:12px 0; border:none; height:1px; background:rgba(0,0,0,0.04)">
+
+  <div class="small">Trending</div>
+  <ul style="padding-left:18px; margin-top:8px; color:#023047">
+    <li><a href="https://sir.gov.in" target="_blank" rel="noopener">SIR</a></li>
+    <li><a href="https://pmkisan.gov.in" target="_blank" rel="noopener">PM Kisan</a></li>
+  </ul>
+</nav>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+
+  <!-- ANIMATED HEADER -->
+  <div class="header-animated" role="banner">
+    <div style="display:flex;align-items:center;gap:14px">
+      <img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="logo" style="width:64px;border-radius:10px">
+      <div>
+        <div style="font-size:20px;font-weight:800">India Sewa Pro</div>
+        <div style="font-size:13px;opacity:0.95">Trusted Government Services Portal</div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="small" id="themeLabel">Auto theme</div>
+      <button id="themeToggle" class="mic" title="Toggle dark mode" aria-pressed="false"><i id="themeIcon" class="fa-solid fa-moon"></i></button>
+    </div>
+  </div>
+
+  <!-- SEARCH + AUTOSUGGEST + VOICE -->
+  <div class="search-wrap" role="search">
+    <div class="search-box" style="flex:1">
+      <i class="fa fa-search" style="color:var(--gov-blue)"></i>
+      <input id="mainSearch" type="text" placeholder="Search services, e.g. 'Aadhaar update', 'PAN apply', 'PM Kisan'">
+      <button id="micBtn" class="mic" aria-pressed="false" title="Voice search"><i class="fa-solid fa-microphone"></i></button>
+    </div>
+  </div>
+
+  <div class="suggestions" id="suggestWrap" aria-hidden="true">
+    <div class="suggestions-list" id="suggestList" style="display:none"></div>
+  </div>
+
+  <!-- ACTION WIDGETS (APIs) -->
+  <section style="margin-top:20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px;">
+
+    <!-- PIN Lookup -->
+    <div style="background:var(--glass-bg); padding:14px; border-radius:12px; border:1px solid var(--glass-border); box-shadow:var(--card-shadow)">
+      <h3 style="margin-bottom:8px">Pincode Lookup</h3>
+      <div class="small">Enter 6-digit PIN code</div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <input id="pinInput" type="text" placeholder="e.g. 110001" style="flex:1;padding:8px;border-radius:8px;border:1px solid #e6eef6">
+        <button id="pinBtn" class="btn">Lookup</button>
+      </div>
+      <div id="pinResult" style="margin-top:10px;font-size:14px"></div>
+      <div class="small" style="margin-top:8px">Uses public API <span class="kv">api.postalpincode.in</span> (no key) — may require CORS proxy on some hosts.</div>
+    </div>
+
+    <!-- Vehicle RC (placeholder) -->
+    <div style="background:var(--glass-bg); padding:14px; border-radius:12px; border:1px solid var(--glass-border); box-shadow:var(--card-shadow)">
+      <h3 style="margin-bottom:8px">Vehicle RC Lookup</h3>
+      <div class="small">Enter vehicle registration number</div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <input id="vehInput" type="text" placeholder="e.g. MH12AB1234" style="flex:1;padding:8px;border-radius:8px;border:1px solid #e6eef6">
+        <button id="vehBtn" class="btn">Check</button>
+      </div>
+      <div id="vehResult" style="margin-top:10px;font-size:14px"></div>
+      <div class="small" style="margin-top:8px">Replace <code>VEHICLE_API_ENDPOINT</code> with your server endpoint that calls the VAHAN/RC API (server-side required).</div>
+    </div>
+
+    <!-- Weather lookup -->
+    <div style="background:var(--glass-bg); padding:14px; border-radius:12px; border:1px solid var(--glass-border); box-shadow:var(--card-shadow)">
+      <h3 style="margin-bottom:8px">Weather Lookup</h3>
+      <div class="small">Enter city name</div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <input id="weatherInput" type="text" placeholder="e.g. Mumbai" style="flex:1;padding:8px;border-radius:8px;border:1px solid #e6eef6">
+        <button id="weatherBtn" class="btn">Get</button>
+      </div>
+      <div id="weatherResult" style="margin-top:10px;font-size:14px"></div>
+      <div class="small" style="margin-top:8px">Uses OpenWeatherMap — put your API key in <code>OPENWEATHER_API_KEY</code> variable in the script below.</div>
+    </div>
+
+  </section>
+
+  <!-- 3D Cards Grid -->
+  <section id="services" style="margin-top:22px">
+    <h2 style="margin-bottom:12px">Trending Government Services</h2>
+
+    <div class="services" id="servicesGrid">
+      <!-- Example cards (feel free to expand) -->
+      <div class="service-box"><i class="fa-solid fa-id-card"></i><h3>Aadhaar</h3><p>Update • Download • Status</p><a class="btn" href="https://uidai.gov.in" target="_blank">Open</a></div>
+      <div class="service-box"><i class="fa-solid fa-address-card"></i><h3>PAN</h3><p>Apply • Download • Verify</p><a class="btn" href="https://tin.tin.nsdl.com" target="_blank">Open</a></div>
+      <div class="service-box"><i class="fa-solid fa-passport"></i><h3>Passport</h3><p>Apply • Renewal</p><a class="btn" href="https://passportindia.gov.in" target="_blank">Open</a></div>
+      <div class="service-box"><i class="fa-solid fa-mobile-screen"></i><h3>UMANG</h3><p>Central Services</p><a class="btn" href="https://umang.gov.in" target="_blank">Open</a></div>
+    </div>
+  </section>
+
+  <div class="footer">
+    © 2025 India Sewa Pro • Developed by Hyper Yamir
+  </div>
 
 </div>
 
-  <!-- PRELOADER -->
-  <div class="preloader" id="preloader" aria-hidden="false">
-    <div class="logo"><img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="logo" /></div>
-    <div class="loader-track" aria-hidden="true"><div class="loader-bar" id="loaderBar"></div></div>
-    <div class="text">India Sewa Pro — Initializing...</div>
-  </div>
-
-  <div class="layout" id="layoutRoot" style="visibility:hidden;">
-
-    <!-- LEFT SIDEBAR -->
-    <aside class="sidebar" aria-label="Site navigation">
-      <div class="brand">
-        <img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="India Sewa Pro Logo">
-        <div>
-          <h2>India Sewa Pro</h2>
-          <p>Trusted Government Services</p>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <h4>Main</h4>
-        <ul class="nav-list" role="menu">
-          <li><a href="#aadhaar"><i class="fa-solid fa-id-card"></i> Aadhaar</a></li>
-          <li><a href="#pan"><i class="fa-solid fa-address-card"></i> PAN</a></li>
-          <li><a href="#passport"><i class="fa-solid fa-passport"></i> Passport</a></li>
-          <li><a href="#land"><i class="fa-solid fa-map"></i> Land Records</a></li>
-          <li><a href="#health"><i class="fa-solid fa-hospital-user"></i> Health ID</a></li>
-        </ul>
-      </div>
-
-      <div class="nav-section">
-        <h4>Quick Links</h4>
-        <div class="quick-links">
-          <a href="https://india.gov.in" target="_blank" rel="noopener">India.gov.in</a>
-          <a href="https://digitalindia.gov.in" target="_blank" rel="noopener">Digital India</a>
-          <a href="https://pmseva.gov.in" target="_blank" rel="noopener">PM Sewa</a>
-          <a href="https://umang.gov.in" target="_blank" rel="noopener">UMANG</a>
-        </div>
-      </div>
-
-      <div style="margin-top:18px;font-size:0.84rem;color:#234;opacity:0.85">
-        <strong>Trending:</strong>
-        <ul style="margin-top:8px;list-style:disc;padding-left:18px;color:#123">
-          <li><a href="https://sir.gov.in" target="_blank" rel="noopener" style="text-decoration:none;color:#023047">SIR</a></li>
-          <li><a href="https://pmkisan.gov.in" target="_blank" rel="noopener" style="text-decoration:none;color:#023047">PM Kisan</a></li>
-        </ul>
-      </div>
-
-    </aside>
-
-    <!-- MAIN -->
-    <main class="main" role="main">
-
-      <!-- HEADER with search -->
-      <header>
-        <div class="header-left">
-          <div>
-            <h1>India Sewa Pro</h1>
-            <p>Trusted Government Services Portal</p>
-          </div>
-        </div>
-
-        <!-- SEARCH + VOICE -->
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
-          <div class="search-wrap" role="search" aria-label="Search services">
-            <div class="left" style="gap:8px">
-              <i class="fa fa-search" style="color:var(--gov-blue);font-size:18px"></i>
-              <input id="searchInput" class="search-input" type="search" placeholder="Search services, e.g. 'Aadhaar update' or 'land records'">
-            </div>
-
-            <div class="search-actions">
-              <button class="mic-btn" id="micBtn" aria-pressed="false" title="Voice search (click and speak)">
-                <i class="fa-solid fa-microphone"></i>
-              </button>
-              <button class="btn" id="searchBtn"><i class="fa fa-arrow-right"></i> Search</button>
-            </div>
-          </div>
-
-          <div class="hint" id="voiceHint">Press the mic and speak. Supported on Chrome & Edge (desktop & Android).</div>
-        </div>
-      </header>
-
-      <!-- Placeholder content; Part-2 will add cards/services grid -->
-      <section id="contentArea" aria-live="polite">
-        <p style="color:#234;opacity:0.85">Loading services… (Part-2 will add the glass 3D cards and services grid).</p>
-      </section>
-
-    </main>
-  </div>
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bottom-nav" role="navigation" aria-label="Mobile navigation">
+  <a href="#home" title="Home"><i class="fa-solid fa-house"></i></a>
+  <a href="#search" title="Search"><i class="fa-solid fa-search"></i></a>
+  <a href="#services" title="Services"><i class="fa-solid fa-list"></i></a>
+  <a href="#profile" title="Profile"><i class="fa-solid fa-user"></i></a>
+</nav>
 
 <script>
-  /* ------------------ PRELOADER LOGIC ------------------ */
-  (function(){
-    const preloader = document.getElementById('preloader');
-    const loaderBar = document.getElementById('loaderBar');
-    // Simulate staged loading with timeouts (fast)
-    setTimeout(()=> loaderBar.style.width = '36%', 250);
-    setTimeout(()=> loaderBar.style.width = '66%', 650);
-    setTimeout(()=> loaderBar.style.width = '92%', 1100);
+/* ================== Initial preloader ================== */
+const preBar = document.getElementById('preBar');
+function animatePreloader(){
+  setTimeout(()=> preBar.style.width = '30%', 220);
+  setTimeout(()=> preBar.style.width = '62%', 620);
+  setTimeout(()=> preBar.style.width = '92%', 1120);
+  setTimeout(()=> {
+    preBar.style.width = '100%';
     setTimeout(()=> {
-      loaderBar.style.width = '100%';
-      // hide preloader and reveal layout
-      setTimeout(()=> {
-        preloader.style.opacity = '0';
-        preloader.setAttribute('aria-hidden', 'true');
-        document.getElementById('layoutRoot').style.visibility = 'visible';
-        setTimeout(()=> preloader.style.display = 'none', 400);
-      }, 350);
-    }, 1500);
-  })();
+      document.getElementById('preloader').style.display = 'none';
+      // after preloader hide: check system preference for theme
+      initTheme();
+    }, 420);
+  }, 1600);
+}
+animatePreloader();
 
-  /* ------------------ SEARCH + VOICE RECOGNITION ------------------ */
-  const searchInput = document.getElementById('searchInput');
-  const micBtn = document.getElementById('micBtn');
-  const searchBtn = document.getElementById('searchBtn');
-  const voiceHint = document.getElementById('voiceHint');
+/* ================== THEME / DARK MODE ================== */
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
 
-  // Click search performs a simple site search (for now just focuses contentArea)
-  searchBtn.addEventListener('click', () => {
-    const q = searchInput.value.trim();
-    if(!q){ searchInput.focus(); return; }
-    // In Part-2 we'll implement full-site search + suggestions; for now simulate
-    document.getElementById('contentArea').innerHTML = '<h3>Search results for: ' + escapeHtml(q) + '</h3><p style="opacity:.9">Showing top matching services and links — full search will be enabled in Part-2.</p>';
-    // push to history for SEO / crawl friendly: this also helps analytics
-    if(history && history.pushState) history.pushState({}, '', '?q=' + encodeURIComponent(q));
-  });
-
-  // Basic sanitization to avoid injecting HTML
-  function escapeHtml(text){
-    return text.replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  }
-
-  /* Voice recognition with graceful fallback */
-  let recognition = null;
-  let isRecording = false;
-  // Feature detect
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
-  if(SpeechRecognition){
-    recognition = new SpeechRecognition();
-    recognition.lang = 'en-IN'; // default; we can toggle bilingual in Part-2
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    recognition.addEventListener('start', () => {
-      isRecording = true;
-      micBtn.classList.add('recording');
-      micBtn.setAttribute('aria-pressed','true');
-      voiceHint.textContent = 'Listening... speak now';
-    });
-
-    recognition.addEventListener('end', () => {
-      isRecording = false;
-      micBtn.classList.remove('recording');
-      micBtn.setAttribute('aria-pressed','false');
-      voiceHint.textContent = 'Press the mic and speak. Supported on Chrome & Edge (desktop & Android).';
-    });
-
-    recognition.addEventListener('result', (e) => {
-      const transcript = e.results[0][0].transcript;
-      searchInput.value = transcript;
-      // auto run search
-      searchBtn.click();
-    });
-
-    recognition.addEventListener('error', (e) => {
-      console.warn('Voice recognition error', e);
-      voiceHint.textContent = 'Voice not recognized. Try again or use keyboard.';
-      isRecording = false;
-      micBtn.classList.remove('recording');
-      micBtn.setAttribute('aria-pressed','false');
-    });
-
-    micBtn.addEventListener('click', () => {
-      try{
-        if(isRecording){ recognition.stop(); }
-        else{ recognition.start(); }
-      }catch(err){
-        console.error(err);
-      }
-    });
+function initTheme(){
+  const saved = localStorage.getItem('isDark');
+  if(saved === null){
+    // follow system preference
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setDark(prefersDark);
+    themeLabel.textContent = prefersDark ? 'Dark (system)' : 'Light (system)';
   } else {
-    // No speech API
-    micBtn.addEventListener('click', () => {
-      // show a friendly toast / hint to user
-      alert('Voice search not supported in this browser. Use Chrome or Edge on desktop or Android for voice search.');
-    });
-    // indicate not supported
-    voiceHint.textContent = 'Voice search unsupported in this browser. Use Chrome/Edge (desktop or Android).';
-    micBtn.style.opacity = 0.9;
+    setDark(saved === 'true');
+    themeLabel.textContent = (saved === 'true') ? 'Dark (saved)' : 'Light (saved)';
   }
+}
 
-  /* Accessibility: Enter key triggers search */
-  searchInput.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter'){ searchBtn.click(); }
+function setDark(enable){
+  if(enable){ document.body.classList.add('dark'); themeIcon.className = 'fa-solid fa-sun'; themeToggle.setAttribute('aria-pressed','true'); }
+  else{ document.body.classList.remove('dark'); themeIcon.className = 'fa-solid fa-moon'; themeToggle.setAttribute('aria-pressed','false'); }
+}
+themeToggle.addEventListener('click', () => {
+  const isDarkNow = document.body.classList.toggle('dark');
+  localStorage.setItem('isDark', isDarkNow ? 'true' : 'false');
+  themeIcon.className = isDarkNow ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  themeLabel.textContent = isDarkNow ? 'Dark (saved)' : 'Light (saved)';
+});
+
+/* ================== VOICE SEARCH ================== */
+const micBtn = document.getElementById('micBtn');
+const mainSearch = document.getElementById('mainSearch');
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+let recognition = null;
+if(SpeechRecognition){
+  recognition = new SpeechRecognition();
+  recognition.lang = 'en-IN';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+  recognition.onstart = () => micBtn.classList.add('recording');
+  recognition.onend = () => micBtn.classList.remove('recording');
+  recognition.onresult = (e) => {
+    const t = e.results[0][0].transcript;
+    mainSearch.value = t;
+    triggerSearch(t);
+  };
+  micBtn.onclick = ()=> {
+    try { recognition.start(); } catch(err) { console.error(err); }
+  };
+} else {
+  micBtn.onclick = ()=> alert('Voice search unsupported — use Chrome/Edge (desktop/Android).');
+}
+
+/* ============== AUTOSUGGEST (local + optional remote) ============== */
+const suggestList = document.getElementById('suggestList');
+const suggestWrap = document.getElementById('suggestWrap');
+const suggestions = [
+  "Aadhaar update", "Aadhaar download", "PAN apply", "PAN correction",
+  "Passport appointment", "Passport status", "Land records", "Bhulekh",
+  "PM Kisan status", "UMANG registration", "Electricity bill", "Ration card"
+];
+
+// show suggestions based on input
+mainSearch.addEventListener('input', (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  if(!q){ suggestList.style.display='none'; suggestWrap.setAttribute('aria-hidden','true'); return; }
+  // local suggestions
+  const local = suggestions.filter(s => s.toLowerCase().includes(q)).slice(0,6);
+  // optional: fetch remote suggestions if you have an endpoint
+  // fetch('/api/suggest?q='+encodeURIComponent(q)).then(...) // implement server-side if wanted
+  renderSuggestions(local, q);
+});
+
+function renderSuggestions(items, q){
+  if(!items.length){ suggestList.style.display='none'; suggestWrap.setAttribute('aria-hidden','true'); return; }
+  suggestList.innerHTML = '';
+  items.forEach(it => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.innerHTML = it.replace(new RegExp('('+escapeReg(q)+')','i'), '<strong>$1</strong>');
+    btn.onclick = ()=> { mainSearch.value = it; suggestList.style.display='none'; suggestWrap.setAttribute('aria-hidden','true'); triggerSearch(it); };
+    suggestList.appendChild(btn);
   });
+  suggestList.style.display = 'block';
+  suggestWrap.setAttribute('aria-hidden','false');
+}
+function escapeReg(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
 
-  /* ------------------ SMALL UTILS ------------------ */
-  // toggle dark-mode with 'd' key for quick visual testing (not required; helpful)
-  document.addEventListener('keydown', (e) => {
-    if(e.key === 'd' && (e.ctrlKey || e.metaKey)){
-      document.body.classList.toggle('dark-mode');
+/* Press Enter to search */
+mainSearch.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter'){ triggerSearch(mainSearch.value.trim()); }
+});
+
+/* trigger search - currently shows simulated results in servicesGrid (expandable) */
+function triggerSearch(query){
+  if(!query) return;
+  // Simple demo: highlight services that match, or append a result card
+  const grid = document.getElementById('servicesGrid');
+  const card = document.createElement('div');
+  card.className = 'service-box';
+  card.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i><h3>Search: ${escapeHtml(query)}</h3><p>Suggested links & services for "<strong>${escapeHtml(query)}</strong>".</p>`;
+  grid.prepend(card);
+  // update URL for SEO/analytics
+  if(history && history.pushState) history.pushState({}, '', '?q=' + encodeURIComponent(query));
+}
+
+/* ================== PIN LOOKUP (api.postalpincode.in) ================== */
+document.getElementById('pinBtn').addEventListener('click', async ()=>{
+  const pin = document.getElementById('pinInput').value.trim();
+  const out = document.getElementById('pinResult');
+  out.innerHTML = 'Searching...';
+  if(!/^\d{6}$/.test(pin)){ out.innerHTML = '<span style="color:#c0392b">Enter valid 6-digit PIN</span>'; return; }
+  try {
+    const res = await fetch('https://api.postalpincode.in/pincode/' + pin);
+    // Note: some hosts may block direct CORS; if blocked, set up a proxy endpoint.
+    const data = await res.json();
+    if(Array.isArray(data) && data[0].Status === 'Success'){
+      const post = data[0].PostOffice[0];
+      out.innerHTML = `<strong>${post.Name}</strong>, ${post.District}, ${post.State} <div class="small">Delivery: ${post.DeliveryStatus}</div>`;
+    } else {
+      out.innerHTML = '<span style="color:#c0392b">No results for this PIN</span>';
     }
-  });
-
-  // Respect prefers-reduced-motion
-  const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if(prefersReduce.matches){
-    // disable preloader animation durations if user prefers reduced motion
-    const bar = document.getElementById('loaderBar');
-    if(bar) bar.style.transition = 'none';
+  } catch(err){
+    console.error(err);
+    out.innerHTML = '<span style="color:#c0392b">Lookup failed — CORS or network issue. Use server proxy if needed.</span>';
   }
+});
+
+/* ================== VEHICLE RC (placeholder) ================== */
+document.getElementById('vehBtn').addEventListener('click', async ()=>{
+  const reg = document.getElementById('vehInput').value.trim();
+  const out = document.getElementById('vehResult');
+  if(!reg){ out.innerHTML = '<span style="color:#c0392b">Enter registration number</span>'; return; }
+  out.innerHTML = 'Checking...';
+  // Replace below with your server endpoint which calls government/VAHAN API (server-side)
+  const VEHICLE_API_ENDPOINT = 'https://your-server.example.com/api/vehicle?reg=' + encodeURIComponent(reg);
+  try {
+    const res = await fetch(VEHICLE_API_ENDPOINT);
+    if(res.ok){
+      const dd = await res.json();
+      // Example expected shape: { make:"", model:"", owner:"", status:"" }
+      out.innerHTML = `<div><strong>${dd.make || 'Make' } ${dd.model || ''}</strong></div><div class="small">Status: ${dd.status||'N/A'}</div>`;
+    } else {
+      out.innerHTML = '<span style="color:#c0392b">Vehicle API returned error. Configure server endpoint.</span>';
+    }
+  } catch(err){
+    console.error(err);
+    out.innerHTML = '<span style="color:#c0392b">Vehicle lookup failed — replace VEHICLE_API_ENDPOINT with your server proxy.</span>';
+  }
+});
+
+/* ================== WEATHER (OpenWeatherMap) ================== */
+const OPENWEATHER_API_KEY = ''; // <-- PUT your OpenWeatherMap API KEY here
+document.getElementById('weatherBtn').addEventListener('click', async ()=>{
+  const city = document.getElementById('weatherInput').value.trim();
+  const out = document.getElementById('weatherResult');
+  if(!city){ out.innerHTML = '<span style="color:#c0392b">Enter city</span>'; return; }
+  if(!OPENWEATHER_API_KEY){ out.innerHTML = '<span style="color:#c0392b">No API key configured. Add OPENWEATHER_API_KEY in the code.</span>'; return; }
+  out.innerHTML = 'Fetching weather...';
+  try {
+    const resp = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&units=metric&appid=${OPENWEATHER_API_KEY}`);
+    if(!resp.ok){ out.innerHTML = '<span style="color:#c0392b">City not found or API error</span>'; return; }
+    const j = await resp.json();
+    out.innerHTML = `<div><strong>${j.name}</strong> — ${j.weather[0].description}, ${j.main.temp} °C</div><div class="small">Humidity: ${j.main.humidity}% • Wind: ${j.wind.speed} m/s</div>`;
+  } catch(err){
+    console.error(err);
+    out.innerHTML = '<span style="color:#c0392b">Weather lookup failed — check API key & CORS.</span>';
+  }
+});
+
+/*  ================== MISC UTILITIES ================== */
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, (m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+/* Accessibility: close suggestions when clicking outside */
+document.addEventListener('click', (e)=>{
+  if(!document.getElementById('suggestWrap').contains(e.target) && e.target !== mainSearch){
+    document.getElementById('suggestList').style.display='none';
+    document.getElementById('suggestWrap').setAttribute('aria-hidden','true');
+  }
+});
+
+/* ------------------ small SEO-friendly pushState when using suggestions ------------------ */
+function setQueryParam(q){
+  if(history && history.replaceState) history.replaceState({}, '', q ? '?q=' + encodeURIComponent(q) : location.pathname);
+}
+
+/* Respect prefers-reduced-motion for preloader */
+if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.querySelectorAll('.pre-bar').forEach(b => b.style.transition='none');
+}
+
 </script>
 
 </body>
