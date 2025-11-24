@@ -1,202 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>India Sewa Pro - Trusted Government Services Portal</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>India Sewa Pro — Voice Search & Sidebar</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<!-- Basic SEO meta (we'll expand in Part-2) -->
+<meta name="description" content="India Sewa Pro — Trusted Government Services Portal. Voice search, modern UI, quick links and responsive layout." />
+<meta name="keywords" content="India Sewa, government services, Aadhaar, PAN, voice search, bhulekh, PM Sewa" />
+<link rel="icon" href="https://i.ibb.co/6WqQ3R8/ashoka.png" />
+
+<!-- Fonts & icons -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+  :root{
+    --gov-blue:#003566;
+    --gov-gold:#d4af37;
+    --glass-bg: rgba(255,255,255,0.65);
+    --glass-border: rgba(255,255,255,0.15);
+    --card-shadow: 0 12px 30px rgba(2,6,23,0.12);
+  }
 
-body {
-  font-family: 'Roboto', sans-serif;
-  background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
-  color: #222;
-  transition: 0.4s ease;
-}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(180deg,#eef6ff 0%, #e6eefc 100%);
+    color:#0b1a2b;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    transition: background .25s ease, color .25s ease;
+  }
 
-body.dark-mode {
-  background: #0d0d0d;
-  color: #fff;
-}
+  /* ---------- PRELOADER ---------- */
+  .preloader{
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg, rgba(3,37,76,0.85), rgba(0,25,50,0.9));
+    z-index:9999;flex-direction:column;color:white;
+  }
+  .preloader .logo{
+    width:86px;height:86px;border-radius:18px;
+    background:linear-gradient(135deg,var(--gov-blue),#072a4b);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45), inset 0 -4px 12px rgba(0,0,0,0.2);
+    margin-bottom:16px;
+    transform: translateZ(0);
+  }
+  .preloader .logo img{width:60px}
+  .preloader .loader-track{
+    width:220px;height:10px;background:rgba(255,255,255,0.12);
+    border-radius:10px;overflow:hidden;
+  }
+  .preloader .loader-bar{
+    height:100%;width:0%;
+    background: linear-gradient(90deg,var(--gov-gold), #ffd86b);
+    border-radius:10px;
+    transition: width 1s cubic-bezier(.2,.9,.3,1);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  }
+  .preloader .text{margin-top:12px;opacity:0.95;font-weight:500}
 
-header {
-  text-align: center;
-  padding: 50px 20px;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(8px);
-  border-bottom: 3px solid #003566;
-}
+  /* ---------- LAYOUT ---------- */
+  .layout{
+    display:flex;min-height:100vh;
+  }
 
-header h1 { font-size: 3em; color: #003566; }
-body.dark-mode header h1 { color: #d4af37; }
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:260px;flex:0 0 260px;background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(240,247,255,0.75));
+    border-right:1px solid rgba(0,53,102,0.06);
+    padding:20px;position:sticky;top:0;height:100vh;
+    backdrop-filter: blur(6px);
+  }
+  .sidebar .brand{
+    display:flex;align-items:center;gap:12px;margin-bottom:18px;
+  }
+  .sidebar .brand img{width:58px}
+  .sidebar h2{font-size:1.08rem;color:var(--gov-blue);margin-bottom:2px}
+  .sidebar p{font-size:0.86rem;color:#334455;opacity:0.9}
 
-header img { width: 120px; margin-bottom: 10px; }
+  .nav-section{margin-top:20px}
+  .nav-section h4{font-size:0.82rem;color:#345;opacity:0.9;margin:12px 0}
+  .nav-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .nav-list a{
+    display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;color:#023047;text-decoration:none;
+    transition:all .18s ease;font-weight:500;font-size:0.95rem;
+  }
+  .nav-list a i{width:28;text-align:center;color:var(--gov-blue)}
+  .nav-list a:hover{background:rgba(0,53,102,0.06);transform:translateX(6px)}
 
-.toggle {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  background: #003566;
-  color: white;
-  padding: 12px;
-  border-radius: 50%;
-  font-size: 18px;
-  border: none;
-  cursor: pointer;
-  z-index: 999;
-}
+  .quick-links{margin-top:18px}
+  .quick-links a{
+    display:inline-block;padding:8px 10px;margin:6px 6px 0 0;border-radius:8px;background:rgba(0,53,102,0.06);
+    color:var(--gov-blue);text-decoration:none;font-weight:600;font-size:0.85rem;
+  }
 
-.services {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 25px;
-  padding: 25px;
-  max-width: 1300px;
-  margin: auto;
-}
+  /* ---------- MAIN ---------- */
+  .main{
+    flex:1;padding:28px;
+  }
 
-.service-box {
-  background: rgba(255,255,255,0.9);
-  padding: 22px;
-  border-radius: 14px;
-  text-align: center;
-  transition: 0.35s ease;
-  transform-style: preserve-3d;
-  box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
-}
+  header{
+    display:flex;align-items:center;gap:18px;justify-content:space-between;margin-bottom:18px;
+  }
+  .header-left{display:flex;align-items:center;gap:14px}
+  .header-left h1{font-size:1.4rem;color:var(--gov-blue)}
+  .header-left p{font-size:0.9rem;color:#234;opacity:0.8}
 
-.service-box:hover {
-  transform: translateY(-10px) rotateX(6deg);
-  box-shadow: 0px 18px 30px rgba(0,0,0,0.3);
-}
+  /* search bar container */
+  .search-wrap{
+    max-width:820px;width:100%;
+    background:var(--glass-bg);
+    border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px;
+    box-shadow: var(--card-shadow);
+    border:1px solid var(--glass-border);
+    backdrop-filter: blur(8px);
+  }
 
-.service-box i {
-  font-size: 40px;
-  margin-bottom: 10px;
-  color: #003566;
-}
+  .search-wrap .left{
+    display:flex;align-items:center;gap:10px;flex:1;
+  }
+  .search-input{
+    border:none;outline:none;font-size:16px;width:100%;
+    background:transparent;padding:8px 6px;color:inherit;
+  }
+  .search-actions{display:flex;gap:8px}
 
-.btn {
-  background: #003566;
-  color: white;
-  padding: 10px 25px;
-  border-radius: 25px;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 12px;
-}
+  .btn{
+    border:none;padding:9px 14px;border-radius:10px;background:var(--gov-blue);color:white;cursor:pointer;font-weight:600;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn.secondary{
+    background:transparent;color:var(--gov-blue);border:1px solid rgba(0,53,102,0.12)
+  }
 
-footer {
-  background: #003566;
-  padding: 18px;
-  text-align: center;
-  color: white;
-  margin-top: 40px;
-}
+  /* mic button */
+  .mic-btn{
+    width:44px;height:44px;border-radius:10px;border:none;background:linear-gradient(180deg,#fff,#f3f8ff);
+    box-shadow: 0 6px 18px rgba(2,6,23,0.06);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .mic-btn.recording{background:linear-gradient(90deg,#ff6b6b,#ffb36b);color:white;box-shadow:0 8px 30px rgba(255,107,107,0.18)}
+
+  /* small helper text */
+  .hint{font-size:0.85rem;color:#234;opacity:0.7;margin-top:8px}
+
+  /* responsive */
+  @media (max-width:980px){
+    .sidebar{display:none}
+    .layout{flex-direction:column}
+    .main{padding:18px}
+  }
 </style>
+	/* SUPER 3D GLASS CARDS */
+.service-box{
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.4);
+
+  box-shadow:
+      0 10px 20px rgba(0,0,0,0.20),
+      0 6px 15px rgba(0,0,0,0.15),
+      inset 0 0 8px rgba(255,255,255,0.4);
+
+  transform: perspective(1000px) translateZ(0px);
+  transition: all .35s ease;
+}
+
+.service-box:hover{
+  transform: perspective(1200px) translateY(-14px) translateZ(25px) scale(1.05);
+  box-shadow:
+      0 20px 30px rgba(0,0,0,0.35),
+      0 8px 25px rgba(0,0,0,0.20),
+      inset 0 0 12px rgba(255,255,255,0.5);
+}
+
+.service-box i{
+  font-size: 55px;
+  margin-bottom: 12px;
+  background: linear-gradient(45deg,#003566,#0077ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.service-box h3{
+  font-size: 23px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.service-box p{
+  font-size: 15px;
+  margin-bottom: 10px;
+}
 </head>
-
 <body>
+	<!-- LEFT SIDEBAR -->
+<div class="sidebar">
+    <h2>Navigation</h2>
+    <a href="#">Home</a>
+    <a href="#">All Services</a>
+    <a href="#">Documents</a>
+    <a href="#">ID Cards</a>
+    <a href="#">Certificates</a>
+    <a href="#">Gov Schemes</a>
+    <a href="#">Support</a>
+</div>
 
-<button class="toggle" onclick="document.body.classList.toggle('dark-mode')">🌙</button>
+<!-- MAIN CONTENT -->
+<div class="content">
 
 <header>
-  <img src="https://i.ibb.co/6WqQ3R8/ashoka.png" />
+  <img src="https://i.ibb.co/6WqQ3R8/ashoka.png">
   <h1>India Sewa Pro</h1>
   <p>Trusted Government Services Portal</p>
 </header>
-<script type="text/javascript">
-	atOptions = {
-		'key' : '009f0b66615d4c2795d74f1ab8f4b1fa',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/009f0b66615d4c2795d74f1ab8f4b1fa/invoke.js"></script>
+
+<!-- SEARCH + VOICE SEARCH -->
+<div class="search-container">
+    <i class="fa fa-search"></i>
+    <input type="text" id="searchInput" placeholder="Search services...">
+    <button class="mic-btn" onclick="startVoiceSearch()">
+        <i class="fa-solid fa-microphone"></i>
+    </button>
+</div>
+
+<!-- SERVICES GRID -->
 <section>
-  <div class="services">
+    <h2 class="title">Trending Government Services</h2>
 
-    <!-- 30 SERVICES BELOW -->
+    <div class="services">
 
-    <div class="service-box"><i class="fa-solid fa-id-card"></i><h3>Aadhaar Card</h3><a href="https://uidai.gov.in" class="btn">Open</a></div>
+        <div class="service-box">
+            <i class="fa-solid fa-id-card"></i>
+            <h3>Aadhaar Card</h3>
+            <p>Update • Download • Check Status</p>
+            <a class="btn" href="https://uidai.gov.in">Open</a>
+        </div>
 
-    <div class="service-box"><i class="fa-solid fa-address-card"></i><h3>PAN Card</h3><a href="https://tin.tin.nsdl.com" class="btn">Open</a></div>
+        <div class="service-box">
+            <i class="fa-solid fa-globe"></i>
+            <h3>SIR Portal</h3>
+            <p>Social Information Report System</p>
+            <a class="btn" href="#">Open</a>
+        </div>
 
-    <div class="service-box"><i class="fa-solid fa-square-check"></i><h3>Voter ID</h3><a href="https://nvsp.in" class="btn">Open</a></div>
+        <div class="service-box">
+            <i class="fa-solid fa-landmark"></i>
+            <h3>India.gov.in</h3>
+            <p>Government of India Official Portal</p>
+            <a class="btn" href="https://india.gov.in">Open</a>
+        </div>
 
-    <div class="service-box"><i class="fa-solid fa-hospital-user"></i><h3>Ayushman Bharat</h3><a href="https://pmjay.gov.in" class="btn">Open</a></div>
+        <div class="service-box">
+            <i class="fa-solid fa-mobile-screen"></i>
+            <h3>UMANG</h3>
+            <p>Centralized Government Services</p>
+            <a class="btn" href="https://umang.gov.in">Open</a>
+        </div>
 
-    <div class="service-box"><i class="fa-solid fa-cloud"></i><h3>DigiLocker</h3><a href="https://digilocker.gov.in" class="btn">Open</a></div>
+        <div class="service-box">
+            <i class="fa-solid fa-id-badge"></i>
+            <h3>PM Sewa Portal</h3>
+            <p>New Central Govt Service System</p>
+            <a class="btn" href="#">Open</a>
+        </div>
 
-    <div class="service-box"><i class="fa-solid fa-bolt"></i><h3>Electricity Bill</h3><a href="https://bharatbillpay.com" class="btn">Pay</a></div>
+        <div class="service-box">
+            <i class="fa-solid fa-passport"></i>
+            <h3>Passport</h3>
+            <p>Apply • Renewal • Police Verification</p>
+            <a class="btn" href="https://passportindia.gov.in">Open</a>
+        </div>
 
-    <div class="service-box"><i class="fa-solid fa-graduation-cap"></i><h3>Scholarship Portal</h3><a href="https://scholarships.gov.in" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-certificate"></i><h3>Birth Certificate</h3><a href="https://crsorgi.gov.in" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-car"></i><h3>Driving License</h3><a href="https://parivahan.gov.in" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-fire"></i><h3>Gas Subsidy</h3><a href="https://my.ebharatgas.com" class="btn">Check</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-bread-slice"></i><h3>Ration Card</h3><a href="https://nfsa.gov.in" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-gear"></i><h3>e-Shram Card</h3><a href="https://eshram.gov.in" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-passport"></i><h3>Passport Service</h3><a href="https://passportindia.gov.in" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-building-columns"></i><h3>PF / UAN</h3><a href="https://epfindia.gov.in" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-file-invoice"></i><h3>Income Tax</h3><a href="https://incometax.gov.in" class="btn">File</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-money-bill"></i><h3>GST Portal</h3><a href="https://gst.gov.in" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-gavel"></i><h3>eDistrict</h3><a href="#" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-heart"></i><h3>Marriage Certificate</h3><a href="#" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-wheat-awn"></i><h3>PM Kisan</h3><a href="https://pmkisan.gov.in" class="btn">Check</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-map"></i><h3>Land Records (Bhulekh)</h3><a href="#" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-droplet"></i><h3>Water Bill</h3><a href="#" class="btn">Pay</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-city"></i><h3>Municipal Tax</h3><a href="#" class="btn">Pay</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-house"></i><h3>PM Awas Yojana</h3><a href="https://pmaymis.gov.in" class="btn">Check</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-shield"></i><h3>Cyber Crime Portal</h3><a href="https://cybercrime.gov.in" class="btn">Report</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-school"></i><h3>School Admission</h3><a href="#" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-stethoscope"></i><h3>Health ID (ABHA)</h3><a href="https://healthid.ndhm.gov.in" class="btn">Create</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-list-check"></i><h3>RTI Portal</h3><a href="https://rtionline.gov.in" class="btn">File</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-wallet"></i><h3>PPF / NPS</h3><a href="#" class="btn">Open</a></div>
-
-    <div class="service-box"><i class="fa-solid fa-bus"></i><h3>Fastag Recharge</h3><a href="https://fastag.org" class="btn">Recharge</a></div>
-
-  </div>
+    </div>
 </section>
-<script type="text/javascript">
-	atOptions = {
-		'key' : '009f0b66615d4c2795d74f1ab8f4b1fa',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
+
+</div>
+
+  <!-- PRELOADER -->
+  <div class="preloader" id="preloader" aria-hidden="false">
+    <div class="logo"><img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="logo" /></div>
+    <div class="loader-track" aria-hidden="true"><div class="loader-bar" id="loaderBar"></div></div>
+    <div class="text">India Sewa Pro — Initializing...</div>
+  </div>
+
+  <div class="layout" id="layoutRoot" style="visibility:hidden;">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" aria-label="Site navigation">
+      <div class="brand">
+        <img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="India Sewa Pro Logo">
+        <div>
+          <h2>India Sewa Pro</h2>
+          <p>Trusted Government Services</p>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <h4>Main</h4>
+        <ul class="nav-list" role="menu">
+          <li><a href="#aadhaar"><i class="fa-solid fa-id-card"></i> Aadhaar</a></li>
+          <li><a href="#pan"><i class="fa-solid fa-address-card"></i> PAN</a></li>
+          <li><a href="#passport"><i class="fa-solid fa-passport"></i> Passport</a></li>
+          <li><a href="#land"><i class="fa-solid fa-map"></i> Land Records</a></li>
+          <li><a href="#health"><i class="fa-solid fa-hospital-user"></i> Health ID</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <h4>Quick Links</h4>
+        <div class="quick-links">
+          <a href="https://india.gov.in" target="_blank" rel="noopener">India.gov.in</a>
+          <a href="https://digitalindia.gov.in" target="_blank" rel="noopener">Digital India</a>
+          <a href="https://pmseva.gov.in" target="_blank" rel="noopener">PM Sewa</a>
+          <a href="https://umang.gov.in" target="_blank" rel="noopener">UMANG</a>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;font-size:0.84rem;color:#234;opacity:0.85">
+        <strong>Trending:</strong>
+        <ul style="margin-top:8px;list-style:disc;padding-left:18px;color:#123">
+          <li><a href="https://sir.gov.in" target="_blank" rel="noopener" style="text-decoration:none;color:#023047">SIR</a></li>
+          <li><a href="https://pmkisan.gov.in" target="_blank" rel="noopener" style="text-decoration:none;color:#023047">PM Kisan</a></li>
+        </ul>
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main" role="main">
+
+      <!-- HEADER with search -->
+      <header>
+        <div class="header-left">
+          <div>
+            <h1>India Sewa Pro</h1>
+            <p>Trusted Government Services Portal</p>
+          </div>
+        </div>
+
+        <!-- SEARCH + VOICE -->
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+          <div class="search-wrap" role="search" aria-label="Search services">
+            <div class="left" style="gap:8px">
+              <i class="fa fa-search" style="color:var(--gov-blue);font-size:18px"></i>
+              <input id="searchInput" class="search-input" type="search" placeholder="Search services, e.g. 'Aadhaar update' or 'land records'">
+            </div>
+
+            <div class="search-actions">
+              <button class="mic-btn" id="micBtn" aria-pressed="false" title="Voice search (click and speak)">
+                <i class="fa-solid fa-microphone"></i>
+              </button>
+              <button class="btn" id="searchBtn"><i class="fa fa-arrow-right"></i> Search</button>
+            </div>
+          </div>
+
+          <div class="hint" id="voiceHint">Press the mic and speak. Supported on Chrome & Edge (desktop & Android).</div>
+        </div>
+      </header>
+
+      <!-- Placeholder content; Part-2 will add cards/services grid -->
+      <section id="contentArea" aria-live="polite">
+        <p style="color:#234;opacity:0.85">Loading services… (Part-2 will add the glass 3D cards and services grid).</p>
+      </section>
+
+    </main>
+  </div>
+
+<script>
+  /* ------------------ PRELOADER LOGIC ------------------ */
+  (function(){
+    const preloader = document.getElementById('preloader');
+    const loaderBar = document.getElementById('loaderBar');
+    // Simulate staged loading with timeouts (fast)
+    setTimeout(()=> loaderBar.style.width = '36%', 250);
+    setTimeout(()=> loaderBar.style.width = '66%', 650);
+    setTimeout(()=> loaderBar.style.width = '92%', 1100);
+    setTimeout(()=> {
+      loaderBar.style.width = '100%';
+      // hide preloader and reveal layout
+      setTimeout(()=> {
+        preloader.style.opacity = '0';
+        preloader.setAttribute('aria-hidden', 'true');
+        document.getElementById('layoutRoot').style.visibility = 'visible';
+        setTimeout(()=> preloader.style.display = 'none', 400);
+      }, 350);
+    }, 1500);
+  })();
+
+  /* ------------------ SEARCH + VOICE RECOGNITION ------------------ */
+  const searchInput = document.getElementById('searchInput');
+  const micBtn = document.getElementById('micBtn');
+  const searchBtn = document.getElementById('searchBtn');
+  const voiceHint = document.getElementById('voiceHint');
+
+  // Click search performs a simple site search (for now just focuses contentArea)
+  searchBtn.addEventListener('click', () => {
+    const q = searchInput.value.trim();
+    if(!q){ searchInput.focus(); return; }
+    // In Part-2 we'll implement full-site search + suggestions; for now simulate
+    document.getElementById('contentArea').innerHTML = '<h3>Search results for: ' + escapeHtml(q) + '</h3><p style="opacity:.9">Showing top matching services and links — full search will be enabled in Part-2.</p>';
+    // push to history for SEO / crawl friendly: this also helps analytics
+    if(history && history.pushState) history.pushState({}, '', '?q=' + encodeURIComponent(q));
+  });
+
+  // Basic sanitization to avoid injecting HTML
+  function escapeHtml(text){
+    return text.replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  /* Voice recognition with graceful fallback */
+  let recognition = null;
+  let isRecording = false;
+  // Feature detect
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+  if(SpeechRecognition){
+    recognition = new SpeechRecognition();
+    recognition.lang = 'en-IN'; // default; we can toggle bilingual in Part-2
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.addEventListener('start', () => {
+      isRecording = true;
+      micBtn.classList.add('recording');
+      micBtn.setAttribute('aria-pressed','true');
+      voiceHint.textContent = 'Listening... speak now';
+    });
+
+    recognition.addEventListener('end', () => {
+      isRecording = false;
+      micBtn.classList.remove('recording');
+      micBtn.setAttribute('aria-pressed','false');
+      voiceHint.textContent = 'Press the mic and speak. Supported on Chrome & Edge (desktop & Android).';
+    });
+
+    recognition.addEventListener('result', (e) => {
+      const transcript = e.results[0][0].transcript;
+      searchInput.value = transcript;
+      // auto run search
+      searchBtn.click();
+    });
+
+    recognition.addEventListener('error', (e) => {
+      console.warn('Voice recognition error', e);
+      voiceHint.textContent = 'Voice not recognized. Try again or use keyboard.';
+      isRecording = false;
+      micBtn.classList.remove('recording');
+      micBtn.setAttribute('aria-pressed','false');
+    });
+
+    micBtn.addEventListener('click', () => {
+      try{
+        if(isRecording){ recognition.stop(); }
+        else{ recognition.start(); }
+      }catch(err){
+        console.error(err);
+      }
+    });
+  } else {
+    // No speech API
+    micBtn.addEventListener('click', () => {
+      // show a friendly toast / hint to user
+      alert('Voice search not supported in this browser. Use Chrome or Edge on desktop or Android for voice search.');
+    });
+    // indicate not supported
+    voiceHint.textContent = 'Voice search unsupported in this browser. Use Chrome/Edge (desktop or Android).';
+    micBtn.style.opacity = 0.9;
+  }
+
+  /* Accessibility: Enter key triggers search */
+  searchInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){ searchBtn.click(); }
+  });
+
+  /* ------------------ SMALL UTILS ------------------ */
+  // toggle dark-mode with 'd' key for quick visual testing (not required; helpful)
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'd' && (e.ctrlKey || e.metaKey)){
+      document.body.classList.toggle('dark-mode');
+    }
+  });
+
+  // Respect prefers-reduced-motion
+  const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if(prefersReduce.matches){
+    // disable preloader animation durations if user prefers reduced motion
+    const bar = document.getElementById('loaderBar');
+    if(bar) bar.style.transition = 'none';
+  }
 </script>
-<script type="text/javascript" src="//www.highperformanceformat.com/009f0b66615d4c2795d74f1ab8f4b1fa/invoke.js"></script>
-<footer>
-  © 2025 India Sewa Pro • Developed by Hyper Yamir
-</footer>
 
 </body>
 </html>
