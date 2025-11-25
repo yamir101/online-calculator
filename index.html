@@ -1,448 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>India Sewa Pro — All Services Portal</title>
-<meta name="description" content="India Sewa Pro - unified portal for government services. Voice search, dark mode, 3D cards, SIR & MP forms, PIN & Weather lookups."/>
-<meta name="keywords" content="Aadhaar, PAN, Passport, SIR, Bhulekh, PM Kisan, government services"/>
-<link rel="icon" href="https://i.ibb.co/6WqQ3R8/ashoka.png">
-<!-- Font Awesome (solid icons) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>India Sewa Pro - Trusted Government Services Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 <style>
-/* ========== ROOT & RESET ========== */
-:root{
-  --gov-blue:#003566;
-  --gov-gold:#d4af37;
-  --bg-light:linear-gradient(180deg,#eef6ff,#e6eefc);
-  --bg-dark:linear-gradient(180deg,#071022,#071428);
-  --card-bg: rgba(255,255,255,0.55);
-  --glass-border: rgba(255,255,255,0.18);
-  --shadow: 0 14px 40px rgba(2,6,23,0.08);
-  --accent:#0077ff;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
+  color: #222;
+  transition: 0.4s ease;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
-body{background:var(--bg-light);color:#072032;transition:background .25s,color .25s}
-body.dark{background:var(--bg-dark);color:#e6eef7}
 
-/* ========== PRELOADER ========== */
-#preloader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:rgba(3,37,76,0.92);z-index:99999;color:#fff}
-.pre-logo{width:100px;height:100px;border-radius:14px;background:linear-gradient(135deg,var(--gov-blue),#072a4b);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-.pre-track{width:320px;height:12px;background:rgba(255,255,255,0.12);border-radius:12px;overflow:hidden;margin-bottom:12px}
-.pre-bar{height:100%;width:0;background:linear-gradient(90deg,var(--gov-gold),#ffd86b);border-radius:12px;transition:width 700ms cubic-bezier(.2,.9,.3,1);box-shadow:0 6px 18px rgba(0,0,0,0.45)}
-.pre-text{opacity:0.95;font-weight:600}
-
-/* ========== LAYOUT ========== */
-.container{display:flex;min-height:100vh}
-.sidebar{
-  width:260px;padding:18px;border-right:1px solid rgba(0,0,0,0.05);
-  background:rgba(255,255,255,0.95);
-  position:sticky;top:18px;height:calc(100vh - 36px);margin:18px;border-radius:12px;backdrop-filter:blur(6px)
+body.dark-mode {
+  background: #0d0d0d;
+  color: #fff;
 }
-body.dark .sidebar{background:rgba(8,12,20,0.55);border:1px solid rgba(255,255,255,0.04)}
-.brand{display:flex;gap:12px;align-items:center;margin-bottom:8px}
-.brand img{width:56px;border-radius:8px}
-.brand h2{font-size:1.05rem;color:var(--gov-blue);margin:0}
-body.dark .brand h2{color:var(--gov-gold)}
-.small{font-size:13px;color:#274252;opacity:.85}
-body.dark .small{color:#bcd6ee;opacity:.9}
 
-.nav{margin-top:12px;display:flex;flex-direction:column;gap:8px}
-.nav a{display:flex;align-items:center;gap:10px;padding:9px;border-radius:10px;text-decoration:none;color:#023047;font-weight:600}
-.nav a:hover{background:rgba(0,53,102,0.06);transform:translateX(6px)}
-body.dark .nav a{color:#cfe6ff}
-
-/* quick links */
-.quick{margin-top:16px;display:flex;flex-direction:column;gap:6px}
-.quick a{color:var(--gov-blue);text-decoration:none;font-weight:700}
-
-/* ========== MAIN ========== */
-.main{flex:1;padding:26px 32px}
-.header{
-  display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;padding:14px;border-radius:12px;overflow:hidden;
-  background:linear-gradient(-45deg,#003566,#005ea8,#0066d1,#d4af37);background-size:400% 400%;animation:hdr 10s linear infinite;color:#fff
+header {
+  text-align: center;
+  padding: 50px 20px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  border-bottom: 3px solid #003566;
 }
-@keyframes hdr{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.header .left{display:flex;align-items:center;gap:12px}
-.header h1{font-size:20px;margin:0}
-.header p{font-size:13px;margin:0;opacity:.9}
-.header .controls{display:flex;gap:10px;align-items:center}
 
-/* theme toggle */
-.theme-btn{background:rgba(255,255,255,0.12);border:none;padding:8px;border-radius:10px;color:#fff;cursor:pointer}
-.theme-btn:active{transform:scale(.98)}
+header h1 { font-size: 3em; color: #003566; }
+body.dark-mode header h1 { color: #d4af37; }
 
-/* ========== SEARCH + SUGGEST ========== */
-.search-row{max-width:920px;margin:18px auto;display:flex;flex-direction:column;gap:6px}
-.search-box{
-  display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:var(--card-bg);
-  border:1px solid var(--glass-border);box-shadow:var(--shadow)
+header img { width: 120px; margin-bottom: 10px; }
+
+.toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: #003566;
+  color: white;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  z-index: 999;
 }
-.search-box input{flex:1;border:none;outline:none;background:transparent;font-size:16px;color:inherit;padding:6px}
-.mic{width:44px;height:44px;border-radius:10px;border:none;background:linear-gradient(180deg,#fff,#f3f8ff);box-shadow:0 6px 18px rgba(2,6,23,0.06);display:flex;align-items:center;justify-content:center;cursor:pointer}
-.mic.recording{background:linear-gradient(90deg,#ff6b6b,#ffb36b);color:#fff}
-.suggest-list{display:none;position:relative;top:4px;background:#fff;border-radius:10px;box-shadow:0 12px 30px rgba(2,6,23,0.12);overflow:hidden;z-index:80}
-body.dark .suggest-list{background:#0b1722;color:#dfeeff}
-.suggest-list button{display:block;width:100%;text-align:left;padding:10px;border:none;background:transparent;cursor:pointer;font-weight:600}
-.suggest-list button:hover{background:rgba(0,53,102,0.04)}
 
-/* ========== WIDGETS / APIS ========== */
-.grid-widgets{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:14px}
-
-/* widget style */
-.widget{background:var(--card-bg);border:1px solid var(--glass-border);padding:14px;border-radius:12px;box-shadow:var(--shadow)}
-.widget .small{margin-top:8px;opacity:.85}
-
-/* ========== SERVICES CARDS ========== */
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:18px}
-.service-box{
-  background:var(--card-bg);backdrop-filter:blur(10px);padding:22px;border-radius:16px;text-align:center;border:1px solid rgba(255,255,255,0.2);
-  box-shadow:0 18px 40px rgba(2,6,23,0.06);transition:all .35s;transform:perspective(1000px) translateZ(0)
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+  padding: 25px;
+  max-width: 1300px;
+  margin: auto;
 }
-.service-box:hover{transform:translateY(-12px) scale(1.03);box-shadow:0 32px 60px rgba(2,6,23,0.14)}
-.service-box i{font-size:42px;margin-bottom:10px;display:inline-block}
-.service-box h3{font-size:18px;margin-bottom:8px}
-.service-box p{font-size:14px;opacity:.9;margin-bottom:10px}
-.btn{display:inline-block;background:var(--gov-blue);color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:700}
 
-/* Mixed icon style simulation: some icons will be outlined via CSS */
-.icon-outline{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:12px;border:2px solid rgba(0,53,102,0.08);color:var(--gov-blue);font-size:20px;background:transparent}
-body.dark .icon-outline{border:1px solid rgba(255,255,255,0.06);color:#cfe6ff}
+.service-box {
+  background: rgba(255,255,255,0.9);
+  padding: 22px;
+  border-radius: 14px;
+  text-align: center;
+  transition: 0.35s ease;
+  transform-style: preserve-3d;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+}
 
-/* ========== BOTTOM NAV (4 buttons) ========== */
-.bottom-nav{display:none;position:fixed;left:50%;transform:translateX(-50%);bottom:14px;background:rgba(255,255,255,0.95);border-radius:40px;padding:6px 10px;box-shadow:0 16px 40px rgba(2,6,23,0.12);z-index:95}
-.bottom-nav a{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:12px;color:var(--gov-blue);text-decoration:none;font-size:18px}
-@media(max-width:840px){.bottom-nav{display:flex}.container-left{display:none}.main{padding-bottom:90px}}
+.service-box:hover {
+  transform: translateY(-10px) rotateX(6deg);
+  box-shadow: 0px 18px 30px rgba(0,0,0,0.3);
+}
 
-/* ========== FOOTER ========== */
-.footer{margin-top:22px;padding:12px;text-align:center;color:#0b3550;opacity:.85}
+.service-box i {
+  font-size: 40px;
+  margin-bottom: 10px;
+  color: #003566;
+}
 
-/* reduced motion */
-@media (prefers-reduced-motion: reduce){.service-box,.header{animation:none!important;transition:none!important}}
+.btn {
+  background: #003566;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 12px;
+}
+
+footer {
+  background: #003566;
+  padding: 18px;
+  text-align: center;
+  color: white;
+  margin-top: 40px;
+}
 </style>
 </head>
+
 <body>
 
-<!-- PRELOADER -->
-<div id="preloader" role="status" aria-live="polite">
-  <div class="pre-logo"><img alt="logo" src="https://i.ibb.co/6WqQ3R8/ashoka.png" style="width:68px"></div>
-  <div class="pre-track"><div id="preBar" class="pre-bar"></div></div>
-  <div class="pre-text">India Sewa Pro — Preparing your portal...</div>
-</div>
+<button class="toggle" onclick="document.body.classList.toggle('dark-mode')">🌙</button>
 
-<div class="container">
+<header>
+  <img src="https://i.ibb.co/6WqQ3R8/ashoka.png" />
+  <h1>India Sewa Pro</h1>
+  <p>Trusted Government Services Portal</p>
+</header>
 
-  <!-- LEFT SIDEBAR -->
-  <aside class="sidebar" aria-label="Main navigation">
-    <div class="brand">
-      <img src="https://i.ibb.co/6WqQ3R8/ashoka.png" alt="logo">
-      <div>
-        <h2>India Sewa Pro</h2>
-        <div class="small">Trusted Government Services</div>
-      </div>
-    </div>
+<section>
+  <div class="services">
 
-    <nav class="nav" aria-label="Quick links">
-      <a href="#home"><span class="fa-solid fa-house"></span> Home</a>
-      <a href="#services"><span class="fa-solid fa-list-check"></span> All Services</a>
-      <a href="#docs"><span class="fa-solid fa-file"></span> Documents</a>
-      <a href="#land"><span class="fa-solid fa-map"></span> Land Records</a>
-      <a href="#support"><span class="fa-solid fa-headset"></span> Support</a>
-    </nav>
+    <!-- 30 SERVICES BELOW -->
 
-    <div class="quick" style="margin-top:14px">
-      <div class="small">Important portals</div>
-      <a href="https://sir.gov.in" target="_blank" rel="noopener">SIR Portal (Samagra / SIR)</a>
-      <a href="https://www.mponline.gov.in" target="_blank" rel="noopener">MP Online (MP forms)</a>
-      <a href="https://india.gov.in" target="_blank" rel="noopener">India.gov.in</a>
-      <a href="https://umang.gov.in" target="_blank" rel="noopener">UMANG</a>
-    </div>
+    <div class="service-box"><i class="fa-solid fa-id-card"></i><h3>Aadhaar Card</h3><a href="https://uidai.gov.in" class="btn">Open</a></div>
 
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main" id="home">
-
-    <!-- HEADER -->
-    <div class="header" role="banner">
-      <div class="left">
-        <img alt="logo" src="https://i.ibb.co/6WqQ3R8/ashoka.png" style="width:56px;border-radius:10px">
-        <div>
-          <h1>India Sewa Pro</h1>
-          <p>Unified portal for government services — voice search, forms & lookups</p>
-        </div>
-      </div>
-
-      <div class="controls">
-        <div id="themeLabel" class="small" style="color:rgba(255,255,255,0.92)">Auto theme</div>
-        <button id="themeToggle" class="theme-btn" title="Toggle dark mode" aria-pressed="false"><i id="themeIcon" class="fa-solid fa-moon"></i></button>
-      </div>
-    </div>
-
-    <!-- SEARCH + SUGGEST -->
-    <div class="search-row" id="searchRow">
-      <div class="search-box" role="search" aria-label="Search services">
-        <i class="fa fa-search" style="color:var(--gov-blue)"></i>
-        <input id="mainSearch" placeholder="Search services e.g. 'Aadhaar update', 'PAN apply'"/>
-        <button id="micBtn" class="mic" title="Click and speak"><i class="fa-solid fa-microphone"></i></button>
-      </div>
-      <div class="suggest-list" id="suggestList" role="listbox" aria-hidden="true"></div>
-    </div>
-
-    <!-- WIDGETS: PIN / WEATHER / Vehicle placeholders -->
-    <section class="grid-widgets" aria-label="Quick lookup widgets">
-      <div class="widget" id="pinWidget">
-        <h3>Pincode Lookup</h3>
-        <div class="small">Enter 6-digit PIN</div>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <input id="pinInput" placeholder="110001" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">
-          <button id="pinBtn" class="btn">Lookup</button>
-        </div>
-        <div id="pinResult" class="small" style="margin-top:10px"></div>
-      </div>
-
-      <div class="widget" id="vehWidget">
-        <h3>Vehicle RC Lookup</h3>
-        <div class="small">Server endpoint required — see comments</div>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <input id="vehInput" placeholder="MH12AB1234" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">
-          <button id="vehBtn" class="btn">Check</button>
-        </div>
-        <div id="vehResult" class="small" style="margin-top:10px"></div>
-      </div>
-
-      <div class="widget" id="weatherWidget">
-        <h3>Weather</h3>
-        <div class="small">Enter city name (OpenWeatherMap key required)</div>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <input id="weatherInput" placeholder="Mumbai" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">
-          <button id="weatherBtn" class="btn">Get</button>
-        </div>
-        <div id="weatherResult" class="small" style="margin-top:10px"></div>
-      </div>
-    </section>
-
-    <!-- TRENDING / SERVICES (30) -->
-    <section id="services" style="margin-top:18px">
-      <h2 style="margin-bottom:10px">Top Government Services</h2>
-      <div class="services" id="servicesGrid">
-
-        <!-- 30 service cards (exact list user agreed) -->
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-id-card"></i></div><h3>Aadhaar Update</h3><p>Update or correct Aadhaar details</p><a class="btn" href="https://uidai.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-id-badge" style="color:var(--gov-blue)"></i><h3>Aadhaar Status</h3><p>Check enrollment & update status</p><a class="btn" href="https://myaadhaar.uidai.gov.in/" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-file-invoice-dollar"></i></div><h3>PAN Apply</h3><p>New PAN application</p><a class="btn" href="https://www.incometax.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-pen-to-square"></i><h3>PAN Correction</h3><p>Update PAN details</p><a class="btn" href="https://www.tin-nsdl.com" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-globe"></i></div><h3>Samagra / SIR</h3><p>Samagra ID / SIR forms (centralized)</p><a class="btn" href="https://sir.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-ticket-simple"></i><h3>BPL Card</h3><p>Beneficiary lists & status</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-map-location-dot"></i></div><h3>Bhulekh / Land Records</h3><p>View land record (state portal)</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-warehouse"></i><h3>Ration Card</h3><p>Apply / Check ration card</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-seedling"></i></div><h3>PM Kisan</h3><p>Farmer scheme & status</p><a class="btn" href="https://pmkisan.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-hospital-user"></i><h3>Ayushman Bharat</h3><p>Health benefit portal</p><a class="btn" href="https://pmjay.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-certificate"></i></div><h3>Birth Certificate</h3><p>Apply & download</p><a class="btn" href="https://crsorgi.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-skull-crossbones" style="opacity:.0"></i><h3>Death Certificate</h3><p>Apply & register</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-file-certificate"></i></div><h3>Income Certificate</h3><p>Issuance & status</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-users"></i><h3>Caste Certificate</h3><p>Apply and verification</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-house-user"></i></div><h3>Domicile Certificate</h3><p>Apply for residence proof</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-square-check"></i><h3>Voter ID</h3><p>Apply / Search electoral roll</p><a class="btn" href="https://nvsp.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-car"></i></div><h3>Driving License</h3><p>Apply / Renewal / Status</p><a class="btn" href="https://parivahan.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-car-rear"></i><h3>RC Status</h3><p>Vehicle registration status</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-user-shield"></i></div><h3>Police Character Certificate</h3><p>Apply for NOC / Character cert</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-graduation-cap"></i><h3>Scholarship Portal</h3><p>Apply for student scholarships</p><a class="btn" href="https://scholarships.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-id-card-clip"></i></div><h3>eShram Card</h3><p>Registration for unorganized workers</p><a class="btn" href="https://eshram.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-briefcase"></i><h3>NREGA Job Card</h3><p>Rural employment card</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-passport"></i></div><h3>Passport</h3><p>Apply or renew passport</p><a class="btn" href="https://passportindia.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-cloud"></i><h3>DigiLocker</h3><p>Store & access documents</p><a class="btn" href="https://digilocker.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-building-columns"></i></div><h3>GST Registration</h3><p>Register or file GST</p><a class="btn" href="https://www.gst.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-industry"></i><h3>MSME / Udyam</h3><p>Register micro & small enterprises</p><a class="btn" href="https://udyamregistration.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-house"></i></div><h3>Property Tax</h3><p>Pay municipal property tax</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-bolt"></i><h3>Electricity Bill</h3><p>Bill payment & status</p><a class="btn" href="https://bharatbillpay.com" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-water"></i></div><h3>Water Bill</h3><p>Pay water charges</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-person-digging"></i><h3>Labour Card</h3><p>Employment & labour services</p><a class="btn" href="#" target="_blank">Open</a></div>
-
-        <div class="service-box"><div class="icon-outline"><i class="fa-solid fa-file-pen"></i></div><h3>Income Tax</h3><p>File returns & check refunds</p><a class="btn" href="https://www.incometax.gov.in" target="_blank">Open</a></div>
-
-        <div class="service-box"><i class="fa-solid fa-hand-holding-dollar"></i><h3>PM Awas / Housing</h3><p>Housing scheme benefits</p><a class="btn" href="https://pmaymis.gov.in" target="_blank">Open</a></div>
-
-      </div>
-    </section>
-
-    <div class="footer">© 2025 India Sewa Pro • Developed by Hyper Yamir</div>
-
-  </main>
-</div>
-
-<!-- BOTTOM NAV (4 buttons) -->
-<nav class="bottom-nav" aria-label="Mobile navigation" role="navigation">
-  <a href="#home" title="Home"><i class="fa-solid fa-house"></i></a>
-  <a href="#search" title="Search" id="bnSearch"><i class="fa-solid fa-search"></i></a>
-  <a href="#services" title="Services"><i class="fa-solid fa-list-check"></i></a>
-  <a href="#profile" title="Profile"><i class="fa-solid fa-user"></i></a>
-</nav>
-
-<script>
-/* ---------- PRELOADER ANIMATION ---------- */
-(function(){
-  const bar = document.getElementById('preBar');
-  setTimeout(()=> bar.style.width='30%',200);
-  setTimeout(()=> bar.style.width='64%',700);
-  setTimeout(()=> bar.style.width='92%',1200);
-  setTimeout(()=> { bar.style.width='100%'; setTimeout(()=> document.getElementById('preloader').style.display='none',420); },1700);
-})();
-
-/* ---------- THEME / DARK MODE ---------- */
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon = document.getElementById('themeIcon');
-const themeLabel = document.getElementById('themeLabel');
-function applyTheme(isDark){
-  if(isDark){ document.body.classList.add('dark'); themeIcon.className='fa-solid fa-sun'; themeToggle.setAttribute('aria-pressed','true'); themeLabel.textContent='Dark (saved)'; }
-  else{ document.body.classList.remove('dark'); themeIcon.className='fa-solid fa-moon'; themeToggle.setAttribute('aria-pressed','false'); themeLabel.textContent='Light (saved)'; }
-}
-(function initTheme(){
-  const s = localStorage.getItem('isDark');
-  if(s===null){
-    const prefers = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    applyTheme(prefers);
-    themeLabel.textContent = prefers ? 'Dark (system)' : 'Light (system)';
-  } else { applyTheme(s==='true'); }
-})();
-themeToggle.addEventListener('click', ()=>{
-  const now = !document.body.classList.contains('dark');
-  applyTheme(now);
-  localStorage.setItem('isDark', now ? 'true' : 'false');
-});
-
-/* ---------- VOICE SEARCH (web speech) ---------- */
-const micBtn = document.getElementById('micBtn');
-const mainSearch = document.getElementById('mainSearch');
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
-let recognition = null;
-if(SpeechRecognition){
-  recognition = new SpeechRecognition();
-  recognition.lang = 'en-IN';
-  recognition.interimResults = false;
-  recognition.onstart = ()=> micBtn.classList.add('recording');
-  recognition.onend = ()=> micBtn.classList.remove('recording');
-  recognition.onresult = (e)=> { const t = e.results[0][0].transcript; mainSearch.value = t; triggerSearch(t); };
-  micBtn.addEventListener('click', ()=> {
-    try{ recognition.start(); } catch(e){ console.warn(e); }
-  });
-} else {
-  micBtn.addEventListener('click', ()=> alert('Voice search unsupported. Use Chrome/Edge (desktop/Android).'));
-}
-
-/* ---------- AUTOSUGGEST (simple local) ---------- */
-const suggestList = document.getElementById('suggestList');
-const sampleSuggestions = [
-  "Aadhaar update","Aadhaar status","PAN apply","PAN correction","Samagra / SIR",
-  "Bhulekh land records","PM Kisan status","UMANG","Passport appointment","DigiLocker",
-  "Voter ID search","Driving License","RC status","Ayushman Bharat","Income certificate",
-  "Domicile certificate","Ration card apply","PM Awas","GST registration","MSME Udyam"
-];
-
-mainSearch.addEventListener('input', (e)=>{
-  const q = String(e.target.value||'').trim().toLowerCase();
-  if(!q){ suggestList.style.display='none'; suggestList.setAttribute('aria-hidden','true'); return; }
-  const matches = sampleSuggestions.filter(s=> s.toLowerCase().includes(q)).slice(0,8);
-  if(!matches.length){ suggestList.style.display='none'; suggestList.setAttribute('aria-hidden','true'); return; }
-  suggestList.innerHTML = matches.map(m=> `<button type="button" class="sug-btn">${m}</button>`).join('');
-  suggestList.style.display='block'; suggestList.setAttribute('aria-hidden','false');
-  Array.from(suggestList.querySelectorAll('.sug-btn')).forEach(btn=>{
-    btn.addEventListener('click', ()=> { mainSearch.value = btn.textContent; suggestList.style.display='none'; triggerSearch(btn.textContent); });
-  });
-});
-document.addEventListener('click', (e)=>{ if(!document.getElementById('searchRow').contains(e.target)) { suggestList.style.display='none'; } });
-mainSearch.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ triggerSearch(mainSearch.value.trim()); } });
-
-/* ---------- SEARCH HANDLER (demo) ---------- */
-function triggerSearch(q){
-  if(!q) return;
-  // push a result card at top of services for demo
-  const grid = document.getElementById('servicesGrid');
-  const card = document.createElement('div'); card.className='service-box';
-  card.innerHTML = `<i class="fa-solid fa-magnifying-glass" style="color:var(--gov-blue)"></i><h3>Search: ${escapeHtml(q)}</h3><p>Quick suggestions & links for "${escapeHtml(q)}".</p>`;
-  grid.prepend(card);
-  if(history && history.pushState) history.pushState({},'', '?q='+encodeURIComponent(q));
-}
-function escapeHtml(s){ return String(s).replace(/[&<>"']/g, (m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m])); }
-
-/* ---------- PIN LOOKUP (public API) ---------- */
-document.getElementById('pinBtn').addEventListener('click', async ()=>{
-  const pin = document.getElementById('pinInput').value.trim();
-  const out = document.getElementById('pinResult');
-  out.textContent = 'Searching...';
-  if(!/^\d{6}$/.test(pin)){ out.innerHTML = '<span style="color:#c0392b">Enter a valid 6-digit PIN</span>'; return; }
-  try{
-    const res = await fetch('https://api.postalpincode.in/pincode/'+encodeURIComponent(pin));
-    const j = await res.json();
-    if(Array.isArray(j) && j[0].Status==='Success'){ const p = j[0].PostOffice[0]; out.innerHTML = `${p.Name}, ${p.District}, ${p.State}`; }
-    else out.innerHTML = '<span style="color:#c0392b">No results</span>';
-  }catch(err){ out.innerHTML = '<span style="color:#c0392b">Lookup failed (CORS/network)</span>'; }
-});
-
-/* ---------- VEHICLE RC: placeholder (server-side required) ---------- */
-document.getElementById('vehBtn').addEventListener('click', async ()=>{
-  const reg = document.getElementById('vehInput').value.trim();
-  const out = document.getElementById('vehResult');
-  if(!reg){ out.innerHTML = '<span style="color:#c0392b">Enter reg. number</span>'; return; }
-  out.textContent = 'Checking...';
-  // Replace the URL below with your server-side endpoint which queries VAHAN/RC
-  const SERVER_VEHICLE_ENDPOINT = 'https://your-server.example.com/api/vehicle?reg=' + encodeURIComponent(reg);
-  try{
-    const r = await fetch(SERVER_VEHICLE_ENDPOINT);
-    if(!r.ok){ out.innerHTML='<span style="color:#c0392b">Server endpoint error</span>'; return; }
-    const data = await r.json(); out.innerHTML = `<strong>${data.make||'Make'} ${data.model||''}</strong><div class="small">Status: ${data.status||'N/A'}</div>`;
-  }catch(err){ out.innerHTML = '<span style="color:#c0392b">Vehicle lookup failed — configure server proxy</span>'; }
-});
-
-/* ---------- WEATHER (OpenWeatherMap) ---------- */
-const OPENWEATHER_API_KEY = ''; // <-- Put your OpenWeatherMap API KEY here
-document.getElementById('weatherBtn').addEventListener('click', async ()=>{
-  const city = document.getElementById('weatherInput').value.trim();
-  const out = document.getElementById('weatherResult');
-  if(!city){ out.innerHTML = '<span style="color:#c0392b">Enter city</span>'; return; }
-  if(!OPENWEATHER_API_KEY){ out.innerHTML = '<span style="color:#c0392b">No API key set in code</span>'; return; }
-  out.textContent = 'Fetching...';
-  try{
-    const resp = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&units=metric&appid=${OPENWEATHER_API_KEY}`);
-    if(!resp.ok){ out.innerHTML='<span style="color:#c0392b">City not found or API key error</span>'; return; }
-    const j = await resp.json(); out.innerHTML = `<strong>${j.name}</strong> - ${j.weather[0].description}, ${j.main.temp}°C`;
-  }catch(e){ out.innerHTML = '<span style="color:#c0392b">Weather lookup failed</span>'; }
-});
-
-/* ---------- BOTTOM NAV: scroll behavior (mobile) ---------- */
-document.getElementById('bnSearch').addEventListener('click', (e)=>{ e.preventDefault(); document.getElementById('mainSearch').focus(); window.scrollTo({top:0,behavior:'smooth'}); });
-
-/* ---------- Accessibility: reduce motion handling already via CSS media query ---------- */
+    <div class="service-box"><i class="fa-solid fa-address-card"></i><h3>PAN Card</h3><a href="https://tin.tin.nsdl.com" class="btn">Open</a></div>
+    
+<script type="text/javascript">
+	atOptions = {
+		'key' : '009f0b66615d4c2795d74f1ab8f4b1fa',
+		'format' : 'iframe',
+		'height' : 250,
+		'width' : 300,
+		'params' : {}
+	};
 </script>
+<script type="text/javascript" src="//www.highperformanceformat.com/009f0b66615d4c2795d74f1ab8f4b1fa/invoke.js"></script>
+    <div class="service-box"><i class="fa-solid fa-square-check"></i><h3>Voter ID</h3><a href="https://nvsp.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-hospital-user"></i><h3>Ayushman Bharat</h3><a href="https://pmjay.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-cloud"></i><h3>DigiLocker</h3><a href="https://digilocker.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-bolt"></i><h3>Electricity Bill</h3><a href="https://bharatbillpay.com" class="btn">Pay</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-graduation-cap"></i><h3>Scholarship Portal</h3><a href="https://scholarships.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-certificate"></i><h3>Birth Certificate</h3><a href="https://crsorgi.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-car"></i><h3>Driving License</h3><a href="https://parivahan.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-fire"></i><h3>Gas Subsidy</h3><a href="https://my.ebharatgas.com" class="btn">Check</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-bread-slice"></i><h3>Ration Card</h3><a href="https://nfsa.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-gear"></i><h3>e-Shram Card</h3><a href="https://eshram.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-passport"></i><h3>Passport Service</h3><a href="https://passportindia.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-building-columns"></i><h3>PF / UAN</h3><a href="https://epfindia.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-file-invoice"></i><h3>Income Tax</h3><a href="https://incometax.gov.in" class="btn">File</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-money-bill"></i><h3>GST Portal</h3><a href="https://gst.gov.in" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-gavel"></i><h3>eDistrict</h3><a href="#" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-heart"></i><h3>Marriage Certificate</h3><a href="#" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-wheat-awn"></i><h3>PM Kisan</h3><a href="https://pmkisan.gov.in" class="btn">Check</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-map"></i><h3>Land Records (Bhulekh)</h3><a href="#" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-droplet"></i><h3>Water Bill</h3><a href="#" class="btn">Pay</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-city"></i><h3>Municipal Tax</h3><a href="#" class="btn">Pay</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-house"></i><h3>PM Awas Yojana</h3><a href="https://pmaymis.gov.in" class="btn">Check</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-shield"></i><h3>Cyber Crime Portal</h3><a href="https://cybercrime.gov.in" class="btn">Report</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-school"></i><h3>School Admission</h3><a href="#" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-stethoscope"></i><h3>Health ID (ABHA)</h3><a href="https://healthid.ndhm.gov.in" class="btn">Create</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-list-check"></i><h3>RTI Portal</h3><a href="https://rtionline.gov.in" class="btn">File</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-wallet"></i><h3>PPF / NPS</h3><a href="#" class="btn">Open</a></div>
+
+    <div class="service-box"><i class="fa-solid fa-bus"></i><h3>Fastag Recharge</h3><a href="https://fastag.org" class="btn">Recharge</a></div>
+
+  </div>
+</section>
+
+<footer>
+  © 2025 India Sewa Pro • Developed by Hyper Yamir
+</footer>
+
 </body>
-</html>
+</html> 
